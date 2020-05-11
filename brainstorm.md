@@ -32,8 +32,9 @@ For each identified data source,
    establishment of specific areas of study from various universities. We
    can answer the first two questions with this dataset
 
-- https://www.kaggle.com/theriley106/university-statistics
 
-    - The data was retrieved from US-News (311 rows, 39 columns)
-    - This dataset compiles a wide range of student statistics
+   - https://www.kaggle.com/theriley106/university-statistics
+
+      - The data was retrieved from US-News (311 rows, 39 columns)
+      - This dataset compiles a wide range of student statistics
    that we can use to rank univeristies and answer our third question.
