@@ -25,14 +25,14 @@ For each identified data source,
 - How many observations (rows) and features (columns) are in your data?
 - What questions (from above) can be answered using the data in this dataset?
 
-- https://www.kaggle.com/sumithbhongale/american-university-data-ipeds-dataset#IPEDS_data.xlsx
-  - The data is generated from tableau (1534 rows, 145 columns)
-  - This dataset includes school rankings, ethnicity data, and detail into
+
+  - https://www.kaggle.com/sumithbhongale/american-university-data-ipeds-dataset#IPEDS_data.xlsx
+    - The data is generated from tableau (1534 rows, 145 columns)
+    - This dataset includes school rankings, ethnicity data, and detail into
    establishment of specific areas of study from various universities. We
    can answer the first two questions with this dataset
 
-
-   - https://www.kaggle.com/theriley106/university-statistics
+- https://www.kaggle.com/theriley106/university-statistics
 
     - The data was retrieved from US-News (311 rows, 39 columns)
     - This dataset compiles a wide range of student statistics
