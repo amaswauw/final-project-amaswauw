@@ -9,18 +9,12 @@
 
 - What data-driven questions do you hope to answer about this domain
     - Question is related to the field
-<<<<<<< HEAD
     Which schools are easier to get in to?
     Which schools are most established in these areas of study?(CS, INFO, ACMS, STATS, HCDE)
     What schools rank highest based on student statistics(GPA, ethnicity, SAT, etc)
     - Describes how the question can be answered using data (e.g., a specific comparison within or analysis of the data that answers the question)
     We will filter our datasets based on departments and student statistics.
     Combining datasets
-=======
-      -
-    - Describes how the question can be answered using data (e.g., a specific comparison within or analysis of the data that answers the question)
-      -
->>>>>>> a17ea1353f7d10d160eed0b8e3e0e3db7ef89817
 
 ## Finding Data
 For each identified data source,
