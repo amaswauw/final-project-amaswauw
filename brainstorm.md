@@ -6,9 +6,13 @@
 **Examples of other data driven projects related to this domain?**
 
 - Provides link to a data driven projects
-  - [Similar project](https://github.com/joshkeating/info-201-coursegrades)
+  - [Similar project #1](https://github.com/joshkeating/info-201-coursegrades)
+  - [Similar project #2] ()
+  - [Similar project #3] ()
 - Briefly describes the project in 1 - 2 sentences
-  - This project shows the grades from almost all the classes offered at UW and we wanted to create something similar but generalize it to all universities, not just to UW students.
+  - Similar project #1: This project shows the grades from almost all the classes offered at UW and we wanted to create something similar but generalize it to all universities, not just to UW students.
+  - Similar project #2:
+  - Similar project #3:
 
 **What data-driven questions do you hope to answer about this domain**
 
