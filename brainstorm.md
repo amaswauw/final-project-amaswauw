@@ -1,6 +1,6 @@
 ## Domain of Interest
 **Why are you interested in this field/domain? Describes in at least 2 - 3 sentences why the group is interested in this area. May be personal, or related to pertinence of the domain.**
-  
+
   Our group is interested to determine the acceptance rates of Washington state universities to shine light on how competitive seperate univeristies can be, and show which universities are well established in their seperate departments. In addition, we want to help the incoming class make reasonable college decisions that are best suited for their interest and themselves.
 
 **Examples of other data driven projects related to this domain?**
@@ -8,15 +8,15 @@
 - Provides link to a data driven projects
   - [Similar project #1](https://github.com/joshkeating/info-201-coursegrades)
   - [Similar project #2](https://github.com/eunmyun/Info201-final-project)
-  - [Similar project #3] ()
+  - [Similar project #3]()
 - Briefly describes the project in 1 - 2 sentences
   - Similar project #1: This project shows the grades from almost all the classes offered at UW and we wanted to create something similar but generalize it to all universities, not just to UW students.
-  - Similar project #2: This project shows the differences of the academic performance of students, depends on their gender, area, different program and participation. We want to create project like the difference in erollment of unversity in nation wide and what is the difference in each univeristy. 
+  - Similar project #2: This project shows the differences of the academic performance of students, depends on their gender, area, different program and participation. We want to create project like the difference in erollment of unversity in nation wide and what is the difference in each univeristy.
   - Similar project #3:
 
 **What data-driven questions do you hope to answer about this domain**
 
-- Question is related to the field    
+- Question is related to the field
   - Which schools are easier to get in to?
   - Which schools are most established in these areas of study?(CS, INFO, ACMS, STATS, HCDE)
   - What schools rank highest based on student statistics(GPA, ethnicity, SAT, etc)
