@@ -5,17 +5,17 @@
 
 **Examples of other data driven projects related to this domain?**
 
-    - Provides link to a data driven projects
-      - [Similar project](https://github.com/joshkeating/info-201-coursegrades)
-    - Briefly describes the project in 1 - 2 sentences
-      - This project shows the grades from almost all the classes offered at UW and we wanted to create something similar but generalize it to all universities, not just to UW students.
+- Provides link to a data driven projects
+  - [Similar project](https://github.com/joshkeating/info-201-coursegrades)
+- Briefly describes the project in 1 - 2 sentences
+  - This project shows the grades from almost all the classes offered at UW and we wanted to create something similar but generalize it to all universities, not just to UW students.
 
 **What data-driven questions do you hope to answer about this domain**
 
-    - Question is related to the field    
-      - Which schools are easier to get in to?
-      - Which schools are most established in these areas of study?(CS, INFO, ACMS, STATS, HCDE)
-      - What schools rank highest based on student statistics(GPA, ethnicity, SAT, etc)
+- Question is related to the field    
+  - Which schools are easier to get in to?
+  - Which schools are most established in these areas of study?(CS, INFO, ACMS, STATS, HCDE)
+  - What schools rank highest based on student statistics(GPA, ethnicity, SAT, etc)
 
 **Describes how the question can be answered using data (e.g., a specific comparison within or analysis of the data that answers the question)**
 
@@ -27,6 +27,10 @@ We will combine our datasets and filter our datasets based on departments and st
 **- Description of how was the data collected or generated?**
 **- How many observations (rows) and features (columns) are in your data?**
 **- What questions (from above) can be answered using the data in this dataset?**
+
+Link: https://collegescorecard.ed.gov/data/
+This data is generated from the U.S. department of education (6806 rows, 1982 columns).
+It provides information on college statistics that include a majoity of data on admissions of people into multiple different universities.
 
 Link: https://www.kaggle.com/sumithbhongale/american-university-data-ipeds-dataset#IPEDS_data.xlsx
 The data is generated from tableau (1534 rows, 145 columns).
