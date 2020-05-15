@@ -1,3 +1,6 @@
+# Removing large data
+data/Most-Recent-Cohorts-All-Data-Elements.csv
+
 # Mac folder info file
 .DS_Store
 
