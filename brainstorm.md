@@ -8,11 +8,11 @@
 - Provides link to a data driven projects
   - [Similar project #1](https://github.com/joshkeating/info-201-coursegrades)
   - [Similar project #2](https://github.com/eunmyun/Info201-final-project)
-  - [Similar project #3]()
+  - [Similar project #3](https://github.com/aprilynn/INFO201-Final-Project)
 - Briefly describes the project in 1 - 2 sentences
   - Similar project #1: This project shows the grades from almost all the classes offered at UW and we wanted to create something similar but generalize it to all universities, not just to UW students.
   - Similar project #2: This project shows the differences of the academic performance of students, depends on their gender, area, different program and participation. We want to create project like the difference in erollment of unversity in nation wide and what is the difference in each univeristy.
-  - Similar project #3:
+  - Similar project #3: This project shows data on universities a prospective student may want or need in order to decide on what institution they might attend.
 
 **What data-driven questions do you hope to answer about this domain**
 
