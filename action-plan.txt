@@ -1,5 +1,8 @@
 Creation of index.Rmd
 An introduction of the problem domain and dataset
+- Purpose
+- Data sources
+
 A paragraph of summary information, citing at least 5 values calculated from the data
 - Tuition
 - Standardized test scores (SAT/ACT)
@@ -18,7 +21,7 @@ A file with a function that returns your first chart
 - Scatterplot with plotly
 - Summarize based on state
 (Tuition)
--This graph shows the average tuition for all the universities in the US in each state.	
+-This graph shows the average tuition for all the universities in each state.	
 
 A file with a function that returns your second chart
 - Bar Chart based on SAT/ACT, GPA, acceptance rate, university ranking
@@ -29,11 +32,13 @@ A file with a function that returns your second chart
 - GPA
 - Acceptance rate
 - Ranking
-- This graph shows the average SAT/ACT, GPA, acceptance rate, univeristy ranking of all universities in each state 
+- This graph shows the average SAT/ACT, GPA, acceptance rate, and univeristy ranking of all universities in each state 
 
 A file with a function that returns your third chart
 - Pie chart of overall
 - Ethnicity
+- This graph shows the average ethnic percentages of all univeristies in the US.
+
 Write an introductory paragraph explaining the domain/data set (feel free to borrow from the brainstorm part of the assignment)
 Write a summary paragraph that includes information calculated by your summary information function
 Render your table and describe pertinent observations found in it
