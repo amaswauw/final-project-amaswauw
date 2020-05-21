@@ -4,7 +4,14 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+library("knitr")
+library("plotly")
+source("scripts/function_one.R")
+source("scripts/function_two.R")
+source("scripts/function_three.R")
+source("scripts/function_four.R")
+source("scripts/function_five.R")
+source("scripts/function_six.R")
 ```
 
 ## R Markdown
