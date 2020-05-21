@@ -7,10 +7,24 @@ A paragraph of summary information, citing at least 5 values calculated from the
 - Acceptance rate
 - Ethnicity
 - Ranking
+Using kable create a dplyr to select specific columns
 A table of  aggregated data (e.g., that has been "grouped" by one of your features)
 Three charts that display information from the data (what you visualize is up to you). 
 A file with a function that calculates summary information to be included in your report
 A file with a function that returns a table of summary information included in your report
 A file with a function that returns your first chart
+- Summarize based on state
+(Tuition)
 A file with a function that returns your second chart
+- Summarize based on state
+- Standardized test scores (SAT/ACT)
+- GPA
+- Acceptance rate
+- Ranking
 A file with a function that returns your third chart
+- Pie chart of overall
+- Ethnicity
+Write an introductory paragraph explaining the domain/data set (feel free to borrow from the brainstorm part of the assignment)
+Write a summary paragraph that includes information calculated by your summary information function
+Render your table and describe pertinent observations found in it
+Describe the purpose of each chart (e.g., "this chart was intended to show the relationship between..."), render each chart, and describe pertinent observations found in each chart
