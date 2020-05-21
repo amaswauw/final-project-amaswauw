@@ -1,9 +1,8 @@
-Creation of index.Rmd
-An introduction of the problem domain and dataset
+An introduction of the problem domain and dataset (Andrew)
 - Purpose
 - Data sources
 
-A paragraph of summary information, citing at least 5 values calculated from the data
+A paragraph of summary information, citing at least 5 values calculated from the data (Jo)
 - Tuition
 - Standardized test scores (SAT/ACT)
 - GPA
@@ -12,18 +11,20 @@ A paragraph of summary information, citing at least 5 values calculated from the
 - Ranking
 Using kable create a dplyr to select specific columns
 
-A table of  aggregated data (e.g., that has been "grouped" by one of your features)
+A table of aggregated data (e.g., that has been "grouped" by one of your features) (Elizabeth)
 Three charts that display information from the data (what you visualize is up to you). 
-A file with a function that calculates summary information to be included in your report
-A file with a function that returns a table of summary information included in your report
 
-A file with a function that returns your first chart
+A file with a function that calculates summary information to be included in your report (Aman)
+
+A file with a function that returns a table of summary information included in your report (Elizabeth)
+
+A file with a function that returns your first chart (Andrew)
 - Scatterplot with plotly
 - Summarize based on state
 (Tuition)
 -This graph shows the average tuition for all the universities in each state.	
 
-A file with a function that returns your second chart
+A file with a function that returns your second chart (Aman)
 - Bar Chart based on SAT/ACT, GPA, acceptance rate, university ranking
 - plotly 
 - Substring lapply 
@@ -34,12 +35,12 @@ A file with a function that returns your second chart
 - Ranking
 - This graph shows the average SAT/ACT, GPA, acceptance rate, and univeristy ranking of all universities in each state 
 
-A file with a function that returns your third chart
+A file with a function that returns your third chart (Jo)
 - Pie chart of overall
 - Ethnicity
 - This graph shows the average ethnic percentages of all univeristies in the US.
 
-Write an introductory paragraph explaining the domain/data set (feel free to borrow from the brainstorm part of the assignment)
-Write a summary paragraph that includes information calculated by your summary information function
-Render your table and describe pertinent observations found in it
+Write a summary paragraph that includes information calculated by your summary information function (Aman)
+Render your table and describe pertinent observations found in it (Jo)
 Describe the purpose of each chart (e.g., "this chart was intended to show the relationship between..."), render each chart, and describe pertinent observations found in each chart
+(Andrew, Aman, Jo)
