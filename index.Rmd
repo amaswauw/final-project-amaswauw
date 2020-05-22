@@ -29,6 +29,10 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
+## Summary Information 
+Data that we used containing information about `r summarized_info$total_universities` universities all over the nation. The average tution of universities are \$`r summarized_info$ave_tuition`. Through all school, the average GPA is `r summarized_info$ave_gpa` and average score for SAT is `r summarized_info$ave_SAT_score`, average ACT score is `r summarized_info$ave_ACT_score`. The school with highest acceptance rate is `r highest_acceptance_school`. 
+
+
 ## Summary Table
 ```{r echo=FALSE}
 kable(head(summary_table))
@@ -99,5 +103,9 @@ plot_ly(data = test,
     yaxis = list(title = "Mean Ranking")
   )
 ```
+
+This graph shows the average percentage of ethnicity distribution of all unversities in the United States. Pie chart helps students to see the distribution of overall ethnicity at university. 
+`r pie_plot`
+
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
