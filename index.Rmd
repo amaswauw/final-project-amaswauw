@@ -34,12 +34,14 @@ Data that we used containing information about `r summarized_info$total_universi
 kable(head(summary_table))
 ```
 
-The summary table helps high school students determine their chances of acceptance to specific universities as it highlight average SAT and ACT scores and GPA. The summary table breakdown the various ethic groups that make up the universities student population. From the first six universities displayed, the University of Alabama in Huntsville has the highest avg SAT score of 1314. if a student scored 1100 on the SAT. Then they would be able to determine that their chances of acceptance are greater if they applied to either Alabama A&M University of Alabama State University.
+The summary table helps high school students determine their chances of acceptance to specific universities as it highlight average SAT and ACT scores and GPA. The summary table breakdown the various ethic groups that make up the universities student population. From the first six universities displayed, the University of Alabama in Huntsville has the highest avg SAT score of 1314. If a student scored 1100 on the SAT, then they would be able to determine that their chances of acceptance are greater if they applied to either Alabama A&M University of Alabama State University.
 
 ## Avg Summary Table
 ```{r echo=FALSE}
 kable(head(avg_summary_table))
 ```
+
+The this is the average data table that includes the average results of data collected by states. We decided to sort the data in ascending order based on the ACT scores so that it would be easier for students to pick which states had the best schools for the students that apply to go to college.
 
 ## Including Plots
 
@@ -52,8 +54,6 @@ These graphs show the average SAT/ACT, GPA, acceptance rate, and univeristy rank
 `r mean_hs_gpa`
 `r mean_acceptance_rate`
 `r mean_ranking`
-
-These graphs show the average SAT/ACT, GPA, acceptance rate, and univeristy ranking of all universities in each state. There were six states that were not included in this as there was no data available from those states. These states are Alaska, Hawaii, Nebraska, Minnesota, Nevada, New Mexico. This chart was intended to show the average academic performances from each state, along with showing how each state ranks compared to others. The less the rank, the better they are.
 
 
 `r pie_plot`
