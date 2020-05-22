@@ -29,10 +29,14 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
+## Summary Table
 ```{r echo=FALSE}
 kable(head(summary_table))
 ```
 
+The summary table helps high school students determine their chances of acceptance to specific universities as it highlight average SAT and ACT scores and GPA. The summary table breakdown the various ethic groups that make up the universities student population. From the first six universities displayed, the University of Alabama in Huntsville has the highest avg SAT score of 1314. if a student scored 1100 on the SAT. Then they would be able to determine that their chances of acceptance are greater if they applied to either Alabama A&M University of Alabama State University.
+
+## Avg Summary Table
 ```{r echo=FALSE}
 kable(head(avg_summary_table))
 ```
