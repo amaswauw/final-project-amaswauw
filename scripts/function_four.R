@@ -1,11 +1,10 @@
+# Loading in necessary libraries.
 library("jsonlite")
 library("openxlsx")
 library("dplyr")
-library("ggplot2")
 library("plotly")
-library("styler")
-library("lintr")
 
+# Loading in the necessary dataframes.
 df1 <- read.xlsx("data/IPEDS_data.xlsx")
 df2 <- data.frame(fromJSON(txt = "data/schoolInfo.json"))
 df3 <- read.csv("data/Most-Recent-Cohorts-All-Data-Elements.csv",
@@ -14,15 +13,15 @@ df3 <- read.csv("data/Most-Recent-Cohorts-All-Data-Elements.csv",
 
 table_join <- right_join(df1, df3, by = c("Name" = "INSTNM"))
 table_join2 <- left_join(
-  table_join, 
-  df2, 
+  table_join,
+  df2,
   by = c("Tuition.and.fees,.2013-14" = "tuition"))
 
 
-# Table with tution averages per state
+# Table with tution averages per state.
 tuition_table <- table_join2 %>%
-  select(Name = "Name", 
-         State = "State.abbreviation", 
+  select(Name = "Name",
+         State = "State.abbreviation",
          Tuition = "Tuition.and.fees,.2013-14") %>%
   group_by(State) %>%
   summarize(Tuition = mean(Tuition, na.rm = T)) %>%
@@ -57,4 +56,5 @@ scatter_plot <- function(df) {
     )
 }
 
+# Calling the chart method to produce a chart for the data.
 chart_one <- scatter_plot(tuition_table)
