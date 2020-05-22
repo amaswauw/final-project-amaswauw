@@ -16,7 +16,7 @@ source("scripts/function_five.R")
 source("scripts/function_six.R")
 ```
 ## Introduction
-Choosing a college is one of the most complicated and impactful decisions in the lives of almost every teenager. The purpose of our INFO 201 project is to help advise the incoming college freshman class to engage in a reasonable decision making process in selecting suitable colleges for themselves. Students accessing our database will be able to quickly view significant admissions criteria including averages in GPA and standardized test scores to estimate their prospectives in applying to each univeristy. Information on school ranking, acceptance rate, and tution is also provided to aid students in narrowing their search.  
+Choosing a college is one of the most complicated and impactful decisions in the lives of almost every teenager. The purpose of our INFO 201 project is to help advise the incoming college freshman class to engage in a reasonable decision making process in selecting suitable colleges for themselves. Students accessing our database will be able to quickly view significant admissions criteria including averages in GPA and standardized test scores to estimate their prospectives in applying to each univeristy. Information on school ranking, acceptance rate, and tuition is also provided to aid students in narrowing their search.  
 
 [U.S. Department of Education](https://collegescorecard.ed.gov/data/) This data is generated from the U.S. department of education (6806 rows, 1982 columns). It provides information on college statistics in regards to admission criteria for several different US universities.
 
@@ -43,7 +43,7 @@ kable(head(avg_summary_table))
 
 ## Including Plots
 
-This graph shows the average tuition of all the universities in each state. The scatter plot can help advise students to look into universities by state based on tutition price. 
+This graph illustrates the average tuition of all the universities in each state. The scatter plot can help advise students to look into universities by state based on tuition price. In this way, students can narrow their college selection by observing which states, on average, hold universities with higher or lower tuition statements. 
 `r chart_one` 
 
 These graphs show the average SAT/ACT, GPA, acceptance rate, and univeristy ranking of all universities in each state.  This chart was intended to show the average academic performances from each state, along with showing how each state ranks compared to others. The less the rank, the better they are.

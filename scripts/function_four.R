@@ -25,8 +25,8 @@ tuition_table <- table_join2 %>%
          State = "State.abbreviation", 
          Tuition = "Tuition.and.fees,.2013-14") %>%
   group_by(State) %>%
-  summarize(Average_Tuition = mean(Tuition, na.rm = T)) %>%
-  arrange(-Average_Tuition)
+  summarize(Tuition = mean(Tuition, na.rm = T)) %>%
+  arrange(-Tuition)
 
 
 
@@ -35,9 +35,9 @@ tuition_table <- table_join2 %>%
 scatter_plot <- function(df) {
   plot_ly(
     data = df,
-    x = ~Average_Tuition,
+    x = ~Tuition,
     y = ~State,
-    color = ~Average_Tuition,
+    color = ~Tuition,
     type = "scatter"
   ) %>%
     layout(
