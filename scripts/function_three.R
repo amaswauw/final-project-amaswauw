@@ -4,9 +4,9 @@ library("dplyr")
 library("plotly")
 
 
-df1 <- read.xlsx("data/IPEDS_data.xlsx")
-df2 <- data.frame(fromJSON(txt = "data/schoolInfo.json"))
-df3 <- read.csv("data/Most-Recent-Cohorts-All-Data-Elements.csv", 
+df1 <- read.xlsx("final-project-amaswauw/data/IPEDS_data.xlsx")
+df2 <- data.frame(fromJSON(txt = "final-project-amaswauw/data/schoolInfo.json"))
+df3 <- read.csv("Most-Recent-Cohorts-All-Data-Elements.csv", 
                 stringsAsFactors = FALSE)
 
 #combining all three dfs by the university name
@@ -14,16 +14,6 @@ df3 <- read.csv("data/Most-Recent-Cohorts-All-Data-Elements.csv",
 inner_join_df <- inner_join(df3, df1, by = c("INSTNM" = "Name"))
 #then use left join
 universities_df <- left_join(inner_join_df, df2, by = c("INSTNM" = "displayName"))
-
-
-
-
-#create three charts that display information from the data
-#
-
-
-
-
 
 
 #create a file with a function that returns a table of summary information
@@ -58,6 +48,7 @@ avg_summary_table <- summary_table %>%
     percent_of_two_or_more_races = mean(Percent.of.total.enrollment.that.are.two.or.more.races, na.rm = TRUE),
     percent_of_race_unknown = mean(`Percent.of.total.enrollment.that.are.Race/ethnicity.unknown`, na.rm = TRUE),
     percent_of_nonresident_alien = mean(Percent.of.total.enrollment.that.are.Nonresident.Alien, na.rm = TRUE),
-    percent_of_asian_native_pacific_islander = mean(`Percent.of.total.enrollment.that.are.Asian/Native.Hawaiian/Pacific.Islander`, na.rm = TRUE)
+    percent_of_asian_native_pacific_islander = mean(`Percent.of.total.enrollment.that.are.Asian/Native.Hawaiian/Pacific.Islander`, na.rm = TRUE),
+    percent_of_women = mean(Percent.of.total.enrollment.that.are.women)
   )
 
