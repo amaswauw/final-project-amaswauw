@@ -1,6 +1,7 @@
 ---
-title: "Untitled"
+title: "College Admissions"
 output: html_document
+Authors: Aman Swaroop, Andrew Michaels, Elizabeth Su, Jo Inoue
 ---
 
 ```{r setup, include=FALSE}
