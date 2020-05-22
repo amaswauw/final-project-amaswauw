@@ -9,7 +9,7 @@ library("lintr")
 df1 <- read.xlsx("data/IPEDS_data.xlsx")
 df2 <- data.frame(fromJSON(txt = "data/schoolInfo.json"))
 df3 <- read.csv("data/Most-Recent-Cohorts-All-Data-Elements.csv",
-  stringsAsFactors = FALSE
+                stringsAsFactors = FALSE
 )
 
 table_join <- right_join(df1, df3, by = c("Name" = "INSTNM"))

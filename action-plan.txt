@@ -11,11 +11,7 @@ A paragraph of summary information, citing at least 5 values calculated from the
 - Ranking
 Using kable create a dplyr to select specific columns
 
-A table of aggregated data (e.g., that has been "grouped" by one of your features) (Elizabeth)
 Three charts that display information from the data (what you visualize is up to you). 
-
-
-A file with a function that returns a table of summary information included in your report (Elizabeth)
 
 A file with a function that returns your first chart (Andrew)
 - Scatterplot with plotly

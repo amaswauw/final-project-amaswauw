@@ -33,8 +33,54 @@ test <- summary_table %>%
             mean_acceptance_rate = mean(acceptance.rate, na.rm = TRUE),
             mean_ranking = mean(overallRank, na.rm = TRUE))
 
-plot_graph <- function(column_name) {
-  plot_ly(data = test,
-          x = ~State.abbreviation,
-          y = ~column_name)
-}
+mean_sat <- plot_ly(data = test,
+                    x = ~State.abbreviation,
+                    y = ~mean_SAT,
+                    type = "bar"
+) %>%
+  layout(
+    title = "Mean SAT score for universities in each state",
+    xaxis = list(title = "State"),
+    yaxis = list(title = "Mean SAT")
+  )
+
+mean_act <- plot_ly(data = test,
+        x = ~State.abbreviation,
+        y = ~mean_ACT,
+        type = "bar"
+)  %>%
+  layout(
+    title = "Mean ACT score for universities in each state",
+    xaxis = list(title = "State"),
+    yaxis = list(title = "Mean ACT")
+  )
+mean_hs_gpa <- plot_ly(data = test,
+        x = ~State.abbreviation,
+        y = ~mean_hs_gpa,
+        type = "bar"
+)  %>%
+  layout(
+    title = "Mean High School GPA for universities in each state",
+    xaxis = list(title = "State"),
+    yaxis = list(title = "Mean High School GPA")
+  )
+mean_acceptance_rate <- plot_ly(data = test,
+        x = ~State.abbreviation,
+        y = ~mean_acceptance_rate,
+        type = "bar"
+)   %>%
+  layout(
+    title = "Mean Acceptance for universities in each state",
+    xaxis = list(title = "State"),
+    yaxis = list(title = "Mean Acceptance Rate GPA")
+  )
+mean_ranking <- plot_ly(data = test,
+        x = ~State.abbreviation,
+        y = ~mean_ranking,
+        type = "bar"
+) %>%
+  layout(
+    title = "Mean Ranking for universities in each state",
+    xaxis = list(title = "State"),
+    yaxis = list(title = "Mean Ranking")
+  )

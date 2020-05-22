@@ -4,9 +4,9 @@ library("dplyr")
 library("plotly")
 
 
-df1 <- read.xlsx("final-project-amaswauw/data/IPEDS_data.xlsx")
-df2 <- data.frame(fromJSON(txt = "final-project-amaswauw/data/schoolInfo.json"))
-df3 <- read.csv("Most-Recent-Cohorts-All-Data-Elements.csv", 
+df1 <- read.xlsx("data/IPEDS_data.xlsx")
+df2 <- data.frame(fromJSON(txt = "data/schoolInfo.json"))
+df3 <- read.csv("data/Most-Recent-Cohorts-All-Data-Elements.csv", 
                 stringsAsFactors = FALSE)
 
 #combining all three dfs by the university name
