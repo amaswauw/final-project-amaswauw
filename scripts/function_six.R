@@ -2,6 +2,7 @@ library("jsonlite")
 library("openxlsx")
 library("dplyr")
 library("ggplot2")
+library("plotly")
 
 df1 <- read.xlsx("data/IPEDS_data.xlsx")
 df2 <- data.frame(fromJSON(txt = "data/schoolInfo.json"))
@@ -56,17 +57,5 @@ ethnicity_categories <- c("American Indian / Alaska Native",
 
 pie_char_df <- data.frame(category = ethnicity_categories, percentage = ethnicity_percentages)
 
-bar_plot <- ggplot(pie_char_df, aes(x = "", y = percentage, fill = category)) + geom_bar(width = 1, stat = "identity")
-
-pie_plot <- bar_plot + 
-  coord_polar("y") + 
-  scale_fill_brewer(palette = "RdBu") + 
-  labs(title = "Average ethnicity distribution of universities", x = NULL, y = NULL) + 
-  geom_text(aes(label = paste(round(percentage, 1), "%")), 
-            position = position_stack(vjust = 0.55)) +
-  theme_classic() +
-  theme(plot.title = element_text(hjust=0.5),
-        axis.line = element_blank(),
-        axis.text = element_blank(),
-        axis.ticks = element_blank()) 
-
+pie_plot <- plot_ly(pie_char_df, 
+        labels = ~category, values = ~percentage, type = 'pie')

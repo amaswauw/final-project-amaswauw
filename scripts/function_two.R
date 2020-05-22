@@ -39,8 +39,4 @@ summarized_info <- summary_info %>%
   )
 
 highest_accpetance_school <- summary_info %>% 
-  filter(acceptance.rate == max(acceptance.rate, na.rm = TRUE)) %>% 
-  pull(INSTNM)
-
-
-  
+  filter(acceptance.rate == max(acceptance.rate, na.rm = TRUE))

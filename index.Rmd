@@ -6,6 +6,7 @@ output: html_document
 ```{r setup, include=FALSE}
 library("knitr")
 library("plotly")
+library("ggplot2")
 source("scripts/function_one.R")
 source("scripts/function_two.R")
 source("scripts/function_three.R")
@@ -24,7 +25,7 @@ Choosing a college is one of the most complicated and impactful decisions in the
 
 
 ## Summary Information 
-Data that we used containing information about `r summarized_info$total_universities` universities all over the nation. The average tution of universities are \$`r summarized_info$ave_tuition`. Through all school, the average GPA is `r summarized_info$ave_gpa` and average score for SAT is `r summarized_info$ave_SAT_score`, average ACT score is `r summarized_info$ave_ACT_score`. The school with highest acceptance rate is `r highest_acceptance_school`. 
+Data that we used containing information about `r summarized_info$total_universities` universities all over the nation. The average tution of universities are \$`r summarized_info$ave_tuition`. Through all school, the average GPA is `r summarized_info$ave_gpa` and average score for SAT is `r summarized_info$ave_SAT_score`, average ACT score is `r summarized_info$ave_ACT_score`. The school with highest acceptance rate is `r highest_accpetance_school$INSTNM`.
 
 
 ## Summary Table
@@ -54,5 +55,5 @@ These graphs show the average SAT/ACT, GPA, acceptance rate, and univeristy rank
 These graphs show the average SAT/ACT, GPA, acceptance rate, and univeristy ranking of all universities in each state. There were six states that were not included in this as there was no data available from those states. These states are Alaska, Hawaii, Nebraska, Minnesota, Nevada, New Mexico. This chart was intended to show the average academic performances from each state, along with showing how each state ranks compared to others. The less the rank, the better they are.
 
 
-This graph shows the average percentage of ethnicity distribution of all unversities in the United States. Pie chart helps students to see the distribution of overall ethnicity at university. 
 `r pie_plot`
+This graph shows the average percentage of ethnicity distribution of all unversities in the United States. Pie chart helps students to see the distribution of overall ethnicity at university. 
