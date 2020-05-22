@@ -20,7 +20,7 @@ table_join2 <- left_join(
 
 
 # Table with tution averages per state
-tution_table <- table_join2 %>%
+tuition_table <- table_join2 %>%
   select(Name = "Name", 
          State = "State.abbreviation", 
          Tuition = "Tuition.and.fees,.2013-14") %>%
@@ -57,4 +57,4 @@ scatter_plot <- function(df) {
     )
 }
 
-chart_one <- scatter_plot(tution_table)
+chart_one <- scatter_plot(tuition_table)
