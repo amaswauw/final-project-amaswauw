@@ -24,12 +24,64 @@ When you click the **Knit** button a document will be generated that includes bo
 kable(head(summary_table))
 ```
 
+```{r echo=FALSE}
+kable(head(avg_summary_table))
+```
+
 ## Including Plots
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+These graphs show the average SAT/ACT, GPA, acceptance rate, and univeristy ranking of all universities in each state. There were six states that were not included in this as there was no data available from those states. These states are Alaska, Hawaii, Nebraska, Minnesota, Nevada, New Mexico. This chart was intended to show the average academic performances from each state, along with showing how each state ranks compared to others. The less the rank, the better they are.
+```{r echo=FALSE}
+plot_ly(data = test,
+        x = ~State.abbreviation,
+        y = ~mean_SAT,
+        type = "bar"
+) %>%
+  layout(
+    title = "Mean SAT score for universities in each state",
+    xaxis = list(title = "State"),
+    yaxis = list(title = "Mean SAT")
+  )
+plot_ly(data = test,
+        x = ~State.abbreviation,
+        y = ~mean_ACT,
+        type = "bar"
+)  %>%
+  layout(
+    title = "Mean ACT score for universities in each state",
+    xaxis = list(title = "State"),
+    yaxis = list(title = "Mean ACT")
+  )
+plot_ly(data = test,
+        x = ~State.abbreviation,
+        y = ~mean_hs_gpa,
+        type = "bar"
+)  %>%
+  layout(
+    title = "Mean High School GPA for universities in each state",
+    xaxis = list(title = "State"),
+    yaxis = list(title = "Mean High School GPA")
+  )
+plot_ly(data = test,
+        x = ~State.abbreviation,
+        y = ~mean_acceptance_rate,
+        type = "bar"
+)   %>%
+  layout(
+    title = "Mean Acceptance for universities in each state",
+    xaxis = list(title = "State"),
+    yaxis = list(title = "Mean Acceptance Rate GPA")
+  )
+plot_ly(data = test,
+        x = ~State.abbreviation,
+        y = ~mean_ranking,
+        type = "bar"
+) %>%
+  layout(
+    title = "Mean Ranking for universities in each state",
+    xaxis = list(title = "State"),
+    yaxis = list(title = "Mean Ranking")
+  )
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
