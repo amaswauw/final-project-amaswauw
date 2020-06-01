@@ -1,4 +1,5 @@
 library(shiny)
+library(leaflet)
 
 states <- list(
   "Alabama" = "AL",
@@ -59,7 +60,7 @@ states <- list(
 # Loading in the necessary dataframes.
 df1 <- read.xlsx("data/IPEDS_data.xlsx")
 df2 <- data.frame(fromJSON(txt = "data/schoolInfo.json"))
-df3 <- read.csv("../Most-Recent-Cohorts-All-Data-Elements.csv",
+df3 <- read.csv("data/Most-Recent-Cohorts-All-Data-Elements.csv",
                 stringsAsFactors = FALSE
 )
 
@@ -111,6 +112,17 @@ page_one <- tabPanel(
   )
 )
 
+map_panel <- mainPanel(
+  leafletOutput("map")
+)
+
+map <- tabPanel(
+  "Map",
+  titlePanel("Map of All Universities in the United States"),
+  map_panel
+)
+
+
 # Academics
 sidebar_content <- sidebarPanel(
   selectInput(
@@ -153,9 +165,10 @@ ui <- navbarPage(
   "University Statistics in the US",
   
   #introduction page of the application
-  page_one,
   tabPanel("Introduction",
            mainPanel(uiOutput("introduction"))),
+  page_one,
+  map,
   academic,
   tabPanel("Major Takeaways",
            mainPanel(uiOutput("takeaways"))),
