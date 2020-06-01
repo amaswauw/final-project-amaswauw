@@ -54,7 +54,6 @@ states <- list(
   "Wisconsin" = "WI",
   "Wyoming" = "WY"
 )
-# Introduction
 
 
 # Tuition
