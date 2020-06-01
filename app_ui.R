@@ -59,7 +59,7 @@ states <- list(
 # Loading in the necessary dataframes.
 df1 <- read.xlsx("data/IPEDS_data.xlsx")
 df2 <- data.frame(fromJSON(txt = "data/schoolInfo.json"))
-df3 <- read.csv("data/Most-Recent-Cohorts-All-Data-Elements.csv",
+df3 <- read.csv("../Most-Recent-Cohorts-All-Data-Elements.csv",
                 stringsAsFactors = FALSE
 )
 
@@ -141,6 +141,11 @@ academic <- tabPanel(
 
 # Ethnicity
 
+#all uni summary table
+summary_states <- tabPanel(
+  "Summary Table of University Statistics",
+  DT::dataTableOutput("summarystates")
+)
 
 
 ui <- navbarPage(
@@ -153,5 +158,6 @@ ui <- navbarPage(
            mainPanel(uiOutput("introduction"))),
   academic,
   tabPanel("Major Takeaways",
-           mainPanel(uiOutput("takeaways")))
+           mainPanel(uiOutput("takeaways"))),
+  summary_states
 )
