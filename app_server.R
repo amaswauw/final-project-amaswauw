@@ -143,6 +143,7 @@ textSummary <- function(data, search) {
 }
 
 
+<<<<<<< HEAD
 draw_bar <- function(data, search, graph_var) {
   filtered_data <- data %>%
     filter(data$STABBR == search)
@@ -160,3 +161,6 @@ draw_bar <- function(data, search, graph_var) {
   )
   return(graph)
 }
+=======
+# Ethnicity
+>>>>>>> f7e7eecde982e8e6e74cabf8b989d2df1b6d0d90
