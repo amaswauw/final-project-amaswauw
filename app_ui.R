@@ -153,6 +153,11 @@ academic <- tabPanel(
 
 # Ethnicity
 
+#all uni summary table
+summary_states <- tabPanel(
+  "Summary Table of University Statistics",
+  DT::dataTableOutput("summarystates")
+)
 
 
 ui <- navbarPage(
@@ -166,5 +171,6 @@ ui <- navbarPage(
   map,
   academic,
   tabPanel("Major Takeaways",
-           mainPanel(uiOutput("takeaways")))
+           mainPanel(uiOutput("takeaways"))),
+  summary_states
 )
