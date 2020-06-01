@@ -63,8 +63,8 @@ df3 <- read.csv("../Most-Recent-Cohorts-All-Data-Elements.csv",
                 stringsAsFactors = FALSE
 )
 
-table_join <- right_join(df1, df3, by = c("Name" = "INSTNM"))
-table_join2 <- left_join(
+join_result <- right_join(df1, df3, by = c("Name" = "INSTNM"))
+join_result2 <- left_join(
   table_join,
   df2,
   by = c("Total.price.for.in-state.students.living.on.campus.2013-14" = "tuition"))

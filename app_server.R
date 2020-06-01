@@ -5,6 +5,7 @@ library("shiny")
 library("plotly")
 library("ggplot2")
 library("DT")
+library("knitr")
 
 
 # Introduction (if necessary)
@@ -135,7 +136,7 @@ draw_scatter <- function(data, graph_var) {
 #all uni summary table
 #all states summary table
 all_states_summary <- join_result2 %>%
-  group_by(INSTNM) %>%
+  group_by(INSTNM, STABBR) %>%
   summarise(
     act.avg = mean(act.avg, na.rm = TRUE),
     hs.gpa.avg = mean(hs.gpa.avg, na.rm = TRUE),

@@ -39,7 +39,7 @@ summary_table <- universities_df %>%
 # Making an aggregated dataframe based on state that includes all of the above
 # information.
 avg_summary_table <- summary_table %>%
-  group_by(STABBR) %>%
+  group_by(STABBR, INSTNM) %>%
   summarise(
   act.avg = mean(act.avg, na.rm = TRUE),
   hs.gpa.avg = mean(hs.gpa.avg, na.rm = TRUE),
