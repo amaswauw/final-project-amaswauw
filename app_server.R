@@ -6,11 +6,33 @@ library(plotly)
 library(ggplot2)
 
 
-server <- function(input, output) {
 # Introduction (if necessary)
 
 
+
 # Tuition
+
+server <- shinyServer(function(input, output) {
+  #render the introduction page
+  output$introduction <- renderUI({
+    HTML(markdown::markdownToHTML(knit('introduction.Rmd', quiet = TRUE)))
+  })
+  
+  
+  # Tuition
+  
+  
+  # Academics
+  output$gpa_graph <- renderPlotly({
+    return(draw_bar(join_result2, input$academicInput,
+                    "hs.gpa.avg"))
+  })
+  
+  output$SAT_graph <- renderPlotly({
+    return(draw_bar(join_result2, input$academicInput,
+                    "SAT_AVG_ALL"))
+  })
+
   
 #x <- reactive ({
 #  final_tuition_table[, input$xaxis]
@@ -61,7 +83,16 @@ server <- function(input, output) {
   
 # Academics
 
+  output$summary <- renderText({
+    return(textSummary(join_result2, input$academicInput))
+  })
+  
+  output$takeaways <- renderUI({
+    HTML(markdown::markdownToHTML(knit('takeaways.Rmd', quiet = TRUE)))
+  })
+})
+
+
 
 # Ethnicity
 
-}

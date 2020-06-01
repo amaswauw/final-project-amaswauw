@@ -97,5 +97,7 @@ ui <- navbarPage(
   #introduction page of the application
   tabPanel("Introduction",
            mainPanel(uiOutput("introduction"))),
-  academic
+  academic,
+  tabPanel("Major Takeaways",
+           mainPanel(uiOutput("takeaways")))
 )
