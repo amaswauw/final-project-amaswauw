@@ -21,7 +21,6 @@ server <- shinyServer(function(input, output) {
   output$introduction <- renderUI({
     HTML(markdown::markdownToHTML(knit('introduction.Rmd', quiet = TRUE)))
   })
-  # Introduction (if necessary)
   
   
   # Tuition
@@ -55,6 +54,10 @@ server <- shinyServer(function(input, output) {
   
   output$summary <- renderText({
     return(textSummary(join_result2, input$academicInput))
+  })
+  
+  output$takeaways <- renderUI({
+    HTML(markdown::markdownToHTML(knit('takeaways.Rmd', quiet = TRUE)))
   })
 })
 
