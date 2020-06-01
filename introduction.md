@@ -1,0 +1,23 @@
+---
+title: "Introduction"
+output: html_document
+---
+
+## Data visualization for University Acceptance Statistics
+
+***
+
+For our final project, we decided to focus on university acceptance rates based on GPA and SAT/ACT test scores. In addition, we wanted to provide more information about the racial proportions in each university to help high school students make reasonable decisions when applying to colleges. Our goal for this project is to help high school students make better decisions when applying to universities, and having more confidence when 
+
+Our project focuses on answering the following questions regarding college decisions:
+  - Which schools are easier to get in to?
+  - Which schools cost the most to attend? which ones cost the least?
+  - Which schools rank highest based on student statistics (GPA, Ethnicity, SAT, etc...)
+  
+To help high school students answer the first question when going through the application process, we created a summary table that outlines the average GPA, test scores, and etc... needed to apply for specific universities in the U.S.. In addition, we have a interactive scatterplot that plots the academics of each university. With this information condensed into one table and plot, students are able to easily compare their statistics with the universities to make better judgements about whether or not they should apply, and have higher acceptance rates if they choose universities within their reach.
+
+For the second aspect, we wanted to help students understand how much money they are spending on their education. We all know that college can be expensive, and planning out your financials before attending a university is important. We want to help students plan for whether or not they will need to take out a loan or apply for more scholarships to attend the university of their choice. The tuition data we used to answer this question is based on in-state tuition. It is important to consider that that universities charge more for out of state students.
+
+Finally, for the third question we wanted to rank the universities based on ethnicity, GPA, test scores, and more to provide additional information to guide students when applying for univeristies. For example, the ethnic breakdown of each university is helpful information because some students want to know if they have a community on campus they could relate to. To answer this question, we created a summary table of the average GPA, test scores, ethnicity, and etc... In addition, we have a pir chart that breaksdown the ethnitcity data for each university.
+
+When creating these different visualizations, we combined all three data sources based on the university name, and sorted the data based on different variables that we were looking for.
