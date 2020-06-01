@@ -33,23 +33,9 @@ server <- shinyServer(function(input, output) {
   output$map <- renderLeaflet({
     return(draw_map(join_result2))
   })
-<<<<<<< HEAD
+
   
   #Tuition
-  output$scatter_plot <- renderPlotly ({
-    return(draw_scatter(final_tuition_table, input$yaxis))
-  })
-  
-
-  
-  
-  
-  
-=======
-
-  data <- final_tuition_table
-  graph_var <- "In_state"
-
 
   output$scatter_plot <- renderPlotly({
     return(draw_scatter(final_tuition_table, input$yaxis))
@@ -58,7 +44,7 @@ server <- shinyServer(function(input, output) {
 
 
 
->>>>>>> b7a79dd4a430f50fe4c3f0d42cf9b60c25386292
+
   # Academics
   output$gpa_graph <- renderPlotly({
     return(draw_bar(join_result2, input$academicInput,
@@ -112,13 +98,10 @@ ethnicity_categories <- c("American Indian / Alaska Native",
                           "Asian / Native Hawaiian / Pacific Islander")
 
 
-<<<<<<< HEAD
-#Create the tuition scatter plot
-draw_scatter <- function(data, graph_var) {  
-=======
 
+#Create the tuition scatter plot
 draw_scatter <- function(data, graph_var) {
->>>>>>> b7a79dd4a430f50fe4c3f0d42cf9b60c25386292
+
   graph_df <- data %>%
     select("State", graph_var)
   if (graph_var == "In_state") {
@@ -131,16 +114,13 @@ draw_scatter <- function(data, graph_var) {
     marker = list(
       size = 10
     )
-<<<<<<< HEAD
   ) %>% 
   layout( 
     title = "In-State Tuition vs State",
     xaxis = list(title = "State"),
     yaxis = list(title = "In-State Tuition")
   ) 
-=======
-  )
->>>>>>> b7a79dd4a430f50fe4c3f0d42cf9b60c25386292
+  
   } else {
     graph <- plot_ly(
       data = graph_df,
@@ -151,14 +131,11 @@ draw_scatter <- function(data, graph_var) {
       marker = list(
         size = 10
       )
-<<<<<<< HEAD
     ) %>% 
     layout( 
       title = "Out-of-State Tuition vs State",
       xaxis = list(title = "State"),
       yaxis = list(title = "Out-of-State Tuition")
-=======
->>>>>>> b7a79dd4a430f50fe4c3f0d42cf9b60c25386292
     )
   }
   return(graph)
