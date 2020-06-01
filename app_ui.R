@@ -211,6 +211,7 @@ summary_states <- tabPanel(
 
 ui <- navbarPage(
   inverse = TRUE,
+  theme = "app.css",
   # application title
   "University Statistics in the US",
   # introduction page of the application

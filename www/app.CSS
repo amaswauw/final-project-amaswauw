@@ -7,7 +7,7 @@ a:visited {
 }
 
 .active {
-  color: yellow;
+  color: black;
   font-style: italic;
   font-family: cursive;
 }
