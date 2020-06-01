@@ -1,6 +1,8 @@
+# Load libraries so they are available
 library(shiny)
 library(leaflet)
 
+# Load in states table so that it can be used later in calculations
 states <- list(
   "Alabama" = "AL",
   "Alaska" = "AK",
@@ -55,23 +57,24 @@ states <- list(
   "Wyoming" = "WY"
 )
 
-
-# Tuition
 # Loading in the necessary dataframes.
 df1 <- read.xlsx("data/IPEDS_data.xlsx")
 df2 <- data.frame(fromJSON(txt = "data/schoolInfo.json"))
 df3 <- read.csv("data/Most-Recent-Cohorts-All-Data-Elements.csv",
-                stringsAsFactors = FALSE
+  stringsAsFactors = FALSE
 )
 
+# Joining data frames based on name
 join_result <- right_join(df1, df3, by = c("Name" = "INSTNM"))
 join_result2 <- left_join(
   join_result,
   df2,
   by =
-    c("Total.price.for.in-state.students.living.on.campus.2013-14"
-      = "tuition"))
-
+    c(
+      "Total.price.for.in-state.students.living.on.campus.2013-14"
+      = "tuition"
+    )
+)
 
 # Table with tution averages per state.
 tuition_table <- join_result2 %>%
@@ -80,15 +83,19 @@ tuition_table <- join_result2 %>%
     State = "STABBR",
     In_State = "Total.price.for.in-state.students.living.on.campus.2013-14",
     Out_of_State =
-      "Total.price.for.out-of-state.students.living.on.campus.2013-14") %>%
+      "Total.price.for.out-of-state.students.living.on.campus.2013-14"
+  ) %>%
   group_by(State) %>%
-  summarize(In_state = mean(In_State, na.rm = T),
-            Out_of_State = mean(Out_of_State, na.rm = T)) %>%
+  summarize(
+    In_state = mean(In_State, na.rm = T),
+    Out_of_State = mean(Out_of_State, na.rm = T)
+  ) %>%
   arrange(-In_state)
 
-#Remove na values from tuition table
+# Remove na values from tuition table
 final_tuition_table <- na.omit(tuition_table)
 
+# Scatter plot from tuition table
 scatter_plot <- tabPanel(
   "Tuition",
   titlePanel("Average Tuition per State"),
@@ -97,8 +104,10 @@ scatter_plot <- tabPanel(
       selectInput(
         inputId = "yaxis",
         label = "Tuition",
-        choices = list("In State" = "In_state",
-                       "Out of State" = "Out_of_State"),
+        choices = list(
+          "In State" = "In_state",
+          "Out of State" = "Out_of_State"
+        ),
         selected = "In_state"
       ),
     ),
@@ -127,10 +136,10 @@ scatter_plot <- tabPanel(
   )
 )
 
+# Map with all universities in the United States
 map_panel <- mainPanel(
   leafletOutput("map")
 )
-
 map <- tabPanel(
   "Map",
   titlePanel("Map of All Universities in the United States"),
@@ -138,7 +147,7 @@ map <- tabPanel(
 )
 
 
-# Academics
+# Academics Information Panel
 sidebar_content <- sidebarPanel(
   selectInput(
     "academicInput",
@@ -148,6 +157,7 @@ sidebar_content <- sidebarPanel(
   )
 )
 
+# Graphs for academic information.
 academic_graph <- mainPanel(
   plotlyOutput("gpa_graph"),
   plotlyOutput("sat_graph"),
@@ -159,14 +169,16 @@ academic_graph <- mainPanel(
 
 academic <- tabPanel(
   "Academics",
-  titlePanel("Academic Breakdown"),
+  h1("Academics"),
+  p("These charts illustrate the average academic performance for
+    each school in a given state"),
   sidebarLayout(
     sidebar_content,
     academic_graph
   )
 )
 
-# Ethnicity
+# Ethnicity Tab
 div_content <- sidebarPanel(
   selectInput(
     "diversityInput",
@@ -176,19 +188,21 @@ div_content <- sidebarPanel(
   )
 )
 
+# Pie chart for ethnicity information.
 pie_chart <- mainPanel(
   plotlyOutput("pie_chart")
 )
 
 ethnicity <- tabPanel(
   "Diversity Breakdown",
-  p("This chart represent average ratio of ethnicity in 
-    all university in that states."), 
+  h1("Ethnic Diversity Breakdown"),
+  p("This chart represent average ratio of ethnicity in
+    all university in that states."),
   sidebarLayout(div_content, pie_chart),
   textOutput(outputId = "ethnicity_summary")
 )
 
-#all uni summary table
+# all uni summary table
 summary_states <- tabPanel(
   "Summary Table of University Statistics",
   DT::dataTableOutput("summarystates")
@@ -197,16 +211,25 @@ summary_states <- tabPanel(
 
 ui <- navbarPage(
   inverse = TRUE,
-  #application title
+  # application title
   "University Statistics in the US",
-  #introduction page of the application
-  tabPanel("Introduction",
-           mainPanel(uiOutput("introduction"))),
+  # introduction page of the application
+  tabPanel(
+    "Introduction",
+    mainPanel(uiOutput("introduction"))
+  ),
+  # Tuition Scatter Plot
   scatter_plot,
+  # Map of all universities in the US
   map,
+  # Ethnicity information
   ethnicity,
+  # Academic Information
   academic,
-  tabPanel("Major Takeaways",
-           mainPanel(uiOutput("takeaways"))),
-  summary_states
+  # Summary of all the universities in each state
+  summary_states,
+  tabPanel(
+    "Major Takeaways",
+    mainPanel(uiOutput("takeaways"))
+  )
 )

@@ -1,4 +1,4 @@
-
+# Load libraries so they are available
 library("jsonlite")
 library("openxlsx")
 library("dplyr")
@@ -10,187 +10,233 @@ library("ggplot2")
 library("DT")
 library("knitr")
 
-
-
-# Introduction (if necessary)
-
+# Load data tables so that they are available
 df1 <- read.xlsx("data/IPEDS_data.xlsx")
 df2 <- data.frame(fromJSON(txt = "data/schoolInfo.json"))
 df3 <- read.csv("data/Most-Recent-Cohorts-All-Data-Elements.csv",
-                stringsAsFactors = FALSE,
-                na.strings = "NULL")
+  stringsAsFactors = FALSE,
+  na.strings = "NULL"
+)
+
+# Join data tables
 join_result <- inner_join(df3, df1, by = c("INSTNM" = "Name"))
-
 join_result2 <- left_join(join_result, df2,
-                             by = c("INSTNM" = "displayName"))
-ethnicity_categories <- c("American Indian / Alaska Native",
-                          "Asian",
-                          "African American / Black",
-                          "Hispanic / Latino",
-                          "White",
-                          "Two or more race",
-                          "Unknown Ethnicity",
-                          "Asian / Native Hawaiian / Pacific Islander")
+  by = c("INSTNM" = "displayName")
+)
 
+# Introduce ethnic categories that we will be measuring
+ethnicity_categories <- c(
+  "American Indian / Alaska Native",
+  "Asian",
+  "African American / Black",
+  "Hispanic / Latino",
+  "White",
+  "Two or more race",
+  "Unknown Ethnicity",
+  "Asian / Native Hawaiian / Pacific Islander"
+)
 
-
+# Get the server running
 server <- shinyServer(function(input, output) {
-  #render the introduction page
+  # render the introduction page
   output$introduction <- renderUI({
     HTML(markdown::markdownToHTML(knit("introduction.Rmd", quiet = TRUE)))
   })
+
+  # Render the map page
   output$map <- renderLeaflet({
     return(draw_map(join_result2))
   })
 
-
-
+  # Render the tuition scatter plot
   output$scatter_plot <- renderPlotly({
     return(draw_scatter(final_tuition_table, input$yaxis))
   })
 
-
-  # Academics
+  # Academics (GPA)
   output$gpa_graph <- renderPlotly({
-    return(draw_bar(join_result2, input$academicInput,
-                    "hs.gpa.avg"))
+    return(draw_bar(
+      join_result2, input$academicInput,
+      "hs.gpa.avg"
+    ))
   })
 
+  # Academics (SAT)
   output$sat_graph <- renderPlotly({
-    return(draw_bar(join_result2, input$academicInput,
-                    "SAT_AVG_ALL"))
+    return(draw_bar(
+      join_result2, input$academicInput,
+      "SAT_AVG_ALL"
+    ))
   })
 
+  # Academics (ACT)
   output$act_graph <- renderPlotly({
-    return(draw_bar(join_result2, input$academicInput,
-                    "ACT.Composite.75th.percentile.score"))
+    return(draw_bar(
+      join_result2, input$academicInput,
+      "ACT.Composite.75th.percentile.score"
+    ))
   })
 
+  # Academics (Acceptance Rate)
   output$acceptance_rate_graph <- renderPlotly({
-    return(draw_bar(join_result2, input$academicInput,
-                    "ADM_RATE"))
+    return(draw_bar(
+      join_result2, input$academicInput,
+      "ADM_RATE"
+    ))
   })
 
+  # Academics (School Ranking)
   output$ranking_graph <- renderPlotly({
-    return(draw_bar(join_result2, input$academicInput,
-                    "overallRank"))
+    return(draw_bar(
+      join_result2, input$academicInput,
+      "overallRank"
+    ))
   })
 
+  # Academics (Summary for academic data)
   output$summary <- renderText({
     return(text_summary(join_result2, input$academicInput))
   })
 
+  # Render key takeaways from this project.
   output$takeaways <- renderUI({
     HTML(markdown::markdownToHTML(knit("takeaways.Rmd", quiet = TRUE)))
   })
 
-#uni summary table
+  # uni summary table
   output$summarystates <- DT::renderDataTable({
     all_states_summary
   })
 
+  # Render ethnic diversity charts
   output$pie_chart <- renderPlotly({
     data_chart <- join_result2 %>%
       group_by(STABBR) %>%
       summarize(
         ave_American_Indian =
-          mean( Percent.of.total.enrollment.that.are.American.Indian.or.Alaska.Native,
-    na.rm = TRUE),
-    ave_Asian = mean(Percent.of.total.enrollment.that.are.Asian,
-                     na.rm = TRUE),
-    ave_African_American =
-      mean(
-        Percent.of.total.enrollment.that.are.Black.or.African.American,
-        na.rm = TRUE),
-    ave_Latino =
-                  mean(
-                    `Percent.of.total.enrollment.that.are.Hispanic/Latino`,
-                    na.rm = TRUE),
-                ave_White = mean(Percent.of.total.enrollment.that.are.White,
-                                 na.rm = TRUE),
-                ave_more_race =
-                  mean(
-                    Percent.of.total.enrollment.that.are.two.or.more.races,
-                    na.rm = TRUE),
-    ave_unknown =
-      mean(
-        `Percent.of.total.enrollment.that.are.Race/ethnicity.unknown`,
-                    na.rm = TRUE),
-    ave_Islander =
-      mean(
+          mean(
+    Percent.of.total.enrollment.that.are.American.Indian.or.Alaska.Native,
+            na.rm = TRUE
+          ),
+        ave_Asian = mean(Percent.of.total.enrollment.that.are.Asian,
+          na.rm = TRUE
+        ),
+        ave_African_American =
+          mean(
+            Percent.of.total.enrollment.that.are.Black.or.African.American,
+            na.rm = TRUE
+          ),
+        ave_Latino =
+          mean(
+            `Percent.of.total.enrollment.that.are.Hispanic/Latino`,
+            na.rm = TRUE
+          ),
+        ave_White = mean(Percent.of.total.enrollment.that.are.White,
+          na.rm = TRUE
+        ),
+        ave_more_race =
+          mean(
+            Percent.of.total.enrollment.that.are.two.or.more.races,
+            na.rm = TRUE
+          ),
+        ave_unknown =
+          mean(
+            `Percent.of.total.enrollment.that.are.Race/ethnicity.unknown`,
+            na.rm = TRUE
+          ),
+        ave_Islander =
+          mean(
 `Percent.of.total.enrollment.that.are.Asian/Native.Hawaiian/Pacific.Islander`,
-                    na.rm = TRUE)) %>%
+            na.rm = TRUE
+          )
+      ) %>%
       filter(STABBR == input$diversityInput)
-    return(draw_pie(data_chart, ethnicity_categories))
+    return(draw_pie(data_chart, ethnicity_categories, input$diversityInput))
   })
-  
+
+  # Render summary for ethnic diversity
   output$ethnicity_summary <- renderText({
     summarized_pie <- join_result2 %>%
       group_by(STABBR) %>%
       summarize(
         ave_American_Indian =
-          mean( Percent.of.total.enrollment.that.are.American.Indian.or.Alaska.Native,
-                na.rm = TRUE),
+          mean(
+Percent.of.total.enrollment.that.are.American.Indian.or.Alaska.Native,
+            na.rm = TRUE
+          ),
         ave_Asian = mean(Percent.of.total.enrollment.that.are.Asian,
-                         na.rm = TRUE),
+          na.rm = TRUE
+        ),
         ave_African_American =
           mean(
             Percent.of.total.enrollment.that.are.Black.or.African.American,
-            na.rm = TRUE),
+            na.rm = TRUE
+          ),
         ave_Latino =
           mean(
             `Percent.of.total.enrollment.that.are.Hispanic/Latino`,
-            na.rm = TRUE),
+            na.rm = TRUE
+          ),
         ave_White = mean(Percent.of.total.enrollment.that.are.White,
-                         na.rm = TRUE),
+          na.rm = TRUE
+        ),
         ave_more_race =
           mean(
             Percent.of.total.enrollment.that.are.two.or.more.races,
-            na.rm = TRUE),
+            na.rm = TRUE
+          ),
         ave_unknown =
           mean(
             `Percent.of.total.enrollment.that.are.Race/ethnicity.unknown`,
-            na.rm = TRUE),
+            na.rm = TRUE
+          ),
         ave_Islander =
           mean(
-            `Percent.of.total.enrollment.that.are.Asian/Native.Hawaiian/Pacific.Islander`,
-            na.rm = TRUE)) %>%
+`Percent.of.total.enrollment.that.are.Asian/Native.Hawaiian/Pacific.Islander`,
+            na.rm = TRUE
+          )
+      ) %>%
       filter(STABBR == input$diversityInput)
-    div_percentages <- c(summarized_pie$ave_American_Indian,
-                         summarized_pie$ave_Asian,
-                         summarized_pie$ave_African_American,
-                         summarized_pie$ave_Latino,
-                         summarized_pie$ave_White,
-                         summarized_pie$ave_more_race,
-                         summarized_pie$ave_unknown,
-                         summarized_pie$ave_Islander)
-    
+    div_percentages <- c(
+      summarized_pie$ave_American_Indian,
+      summarized_pie$ave_Asian,
+      summarized_pie$ave_African_American,
+      summarized_pie$ave_Latino,
+      summarized_pie$ave_White,
+      summarized_pie$ave_more_race,
+      summarized_pie$ave_unknown,
+      summarized_pie$ave_Islander
+    )
     highest_percent <- max(div_percentages)
-    pie_data <- data.frame(percentages = div_percentages, categories = category)
-    highest_race <- pie_data %>% filter(percentages == highest_percent) %>% pull(category)
-    if(highest_percent > 50){
-      paste("From the result of pie chart based on state that you choose, on average, highest ratio in this state is", 
-            highest_race, "and more than half of students are belong in that race on average. ", sep = " ")
+    pie_data <- data.frame(
+      percentages = div_percentages,
+      categories = ethnicity_categories
+    )
+    highest_race <- pie_data %>%
+      filter(percentages == highest_percent) %>%
+      pull(categories)
+    if (highest_percent > 50) {
+      paste("From the result of pie chart based on state that you choose,",
+        "on average, highest ratio in this state is",
+        highest_race,
+        "and more than half of students are belong in",
+        "that race on average.",
+        sep = " "
+      )
     } else {
-      paste("From the result of pie chart based on state that you choose, on average, highest ratio in this state is", 
-            highest_race, "and less than half of students are belong in that race on average. Therefore, we might able to conclude",
-            input$diversityInput, "has well diversed universities.", sep = " ")
+      paste("From the result of pie chart based on state that you choose,",
+        "on average, highest ratio in this state is",
+        highest_race,
+        "and less than half of students are belong in that race on",
+        "average. Therefore, we might able to conclude",
+        input$diversityInput, "has well diversed universities.",
+        sep = " "
+      )
     }
   })
 })
-# Ethnicity
-ethnicity_categories <- c("American Indian / Alaska Native",
-                          "Asian",
-                          "African American / Black",
-                          "Hispanic / Latino",
-                          "White",
-                          "Two or more race",
-                          "Unknown Ethnicity",
-                          "Asian / Native Hawaiian / Pacific Islander")
 
-
-
-#Create the tuition scatter plot
+# Create the tuition scatter plot
 draw_scatter <- function(data, graph_var) {
   graph_df <- data %>%
     select("State", graph_var)
@@ -205,10 +251,11 @@ draw_scatter <- function(data, graph_var) {
         size = 10
       )
     ) %>%
-      layout(title = "In-State Tuition vs State",
-             xaxis = list(title = "State"),
-             yaxis = list(title = "In-State Tuition")
-             )
+      layout(
+        title = "In-State Tuition vs State",
+        xaxis = list(title = "State"),
+        yaxis = list(title = "In-State Tuition")
+      )
   } else {
     graph <- plot_ly(
       data = graph_df,
@@ -220,15 +267,16 @@ draw_scatter <- function(data, graph_var) {
         size = 10
       )
     ) %>%
-    layout(
-      title = "Out-of-State Tuition vs State",
-      xaxis = list(title = "State"),
-      yaxis = list(title = "Out-of-State Tuition")
-    )
+      layout(
+        title = "Out-of-State Tuition vs State",
+        xaxis = list(title = "State"),
+        yaxis = list(title = "Out-of-State Tuition")
+      )
   }
   return(graph)
 }
 
+# Create the map
 draw_map <- function(data) {
   map <- leaflet(data) %>%
     addProviderTiles("CartoDB.Positron") %>%
@@ -240,13 +288,16 @@ draw_map <- function(data) {
   return(map)
 }
 
+# Create the summary for the academic section
 text_summary <- function(data, search) {
   filtered_data <- data %>%
     filter(data$STABBR == search)
   df <- filtered_data %>%
-    select("INSTNM", "hs.gpa.avg", "SAT_AVG_ALL",
-           "ACT.Composite.75th.percentile.score",
-           "ADM_RATE", "overallRank")
+    select(
+      "INSTNM", "hs.gpa.avg", "SAT_AVG_ALL",
+      "ACT.Composite.75th.percentile.score",
+      "ADM_RATE", "overallRank"
+    )
   most_difficult_school_rate <- df %>%
     select("ADM_RATE") %>%
     min(na.rm = TRUE)
@@ -281,48 +332,55 @@ text_summary <- function(data, search) {
         filter(overallRank == lowest_ranked) %>%
         select("INSTNM") %>%
         pull()
-      return(paste0("The following charts show the results for ",
-                    search, ". What we can see is that",
-                    "there are a few schools that are ommitted out",
-                    "of some of the charts. This is because the data",
-                    "was not available for that school.", "The school",
-                    "with the lowest admission rate was ",
-                    most_diff_school_rate_school, " with ",
-                    most_difficult_school_rate, " rate. The school with the ",
-                    "easiest admissions rate was ",
-                    easiest_school_rate_school, " with ", easiest_school_rate,
-                    " rate. The highest ranked school was ",
-                    highest_ranked_school, " and ", lowest_ranked_school,
-                    " was the lowest ranked school."))
+      return(paste0(
+        "The following charts show the results for ",
+        search, ". What we can see is that",
+        "there are a few schools that are ommitted out",
+        "of some of the charts. This is because the data",
+        "was not available for that school.", "The school",
+        "with the lowest admission rate was ",
+        most_diff_school_rate_school, " with ",
+        most_difficult_school_rate, " rate. The school with the ",
+        "easiest admissions rate was ",
+        easiest_school_rate_school, " with ", easiest_school_rate,
+        " rate. The highest ranked school was ",
+        highest_ranked_school, " and ", lowest_ranked_school,
+        " was the lowest ranked school."
+      ))
     }
-    return(paste0("The following charts show the results for ",
-                  search, ". What we can see is that",
-                  "there are a few schools that are ommitted out",
-                  "of some of the charts. This is because the data",
-                  "was not available for that school.", "The school",
-                  "with the lowest admission rate was ",
-                  most_diff_school_rate_school, " with ",
-                  most_difficult_school_rate, " rate. The school with the ",
-                  "easiest admissions rate was ",
-                  easiest_school_rate_school, " with ", easiest_school_rate,
-                  " rate. The highest ranked school was ",
-                  highest_ranked_school, "."))
+    return(paste0(
+      "The following charts show the results for ",
+      search, ". What we can see is that",
+      "there are a few schools that are ommitted out",
+      "of some of the charts. This is because the data",
+      "was not available for that school.", "The school",
+      "with the lowest admission rate was ",
+      most_diff_school_rate_school, " with ",
+      most_difficult_school_rate, " rate. The school with the ",
+      "easiest admissions rate was ",
+      easiest_school_rate_school, " with ", easiest_school_rate,
+      " rate. The highest ranked school was ",
+      highest_ranked_school, "."
+    ))
   } else {
-    return(paste0("The following charts show the results for ",
-                  search, ". What we can see is that",
-                  "there are a few schools that are ommitted out",
-                  "of some of the charts. This is because the data",
-                  "was not available for that school.", "The school",
-                  "with the lowest admission rate was ",
-                  most_diff_school_rate_school, " with ",
-                  most_difficult_school_rate, " rate. The school with the ",
-                  "easiest admissions rate was ",
-                  easiest_school_rate_school, " with ", easiest_school_rate,
-                  " rate. Unfortunately, no ranking information is available ",
-                  "for ", search, "."))
+    return(paste0(
+      "The following charts show the results for ",
+      search, ". What we can see is that",
+      "there are a few schools that are ommitted out",
+      "of some of the charts. This is because the data",
+      "was not available for that school.", "The school",
+      "with the lowest admission rate was ",
+      most_diff_school_rate_school, " with ",
+      most_difficult_school_rate, " rate. The school with the ",
+      "easiest admissions rate was ",
+      easiest_school_rate_school, " with ", easiest_school_rate,
+      " rate. Unfortunately, no ranking information is available ",
+      "for ", search, "."
+    ))
   }
 }
 
+# Create the academic bar charts
 draw_bar <- function(data, search, graph_var) {
   filtered_data <- data %>%
     filter(data$STABBR == search)
@@ -331,40 +389,75 @@ draw_bar <- function(data, search, graph_var) {
   graph <- plot_ly(
     data = graph_df,
     x = ~INSTNM,
-    y = ~graph_df[, graph_var],
+    y = ~ graph_df[, graph_var],
     type = "bar"
   ) %>%
     layout(
-      xaxis = list(tickangle = 45, titlefont = list(size = 30)),
-      yaxis = list(title = graph_var)
+      xaxis = list(tickangle = 45, titlefont = list(size = 30))
     )
+  if (graph_var == "hs.gpa.avg") {
+    graph <- graph %>%
+      layout(
+        title = paste("High School GPA vs Schools in", search),
+        yaxis = list(title = "High School GPA")
+      )
+  } else if (graph_var == "SAT_AVG_ALL") {
+    graph <- graph %>%
+      layout(
+        title = paste("SAT Scores vs Schools in", search),
+        yaxis = list(title = "SAT Score")
+      )
+  } else if (graph_var == "ACT.Composite.75th.percentile.score") {
+    graph <- graph %>%
+      layout(
+        title = paste("ACT Scores vs Schools in", search),
+        yaxis = list(title = "ACT Score")
+      )
+  } else if (graph_var == "ADM_RATE") {
+    graph <- graph %>%
+      layout(
+        title = paste("Admissions Rate vs Schools in", search),
+        yaxis = list(title = "Admissions Rate")
+      )
+  } else {
+    graph <- graph %>%
+      layout(
+        title = paste("Rank vs Schools in", search),
+        yaxis = list(title = "Rank")
+      )
+  }
   return(graph)
 }
 
-# Ethnicity
-draw_pie <- function(data, category) {
-  div_percentages <- c(data$ave_American_Indian,
-                       data$ave_Asian,
-                       data$ave_African_American,
-                       data$ave_Latino,
-                       data$ave_White,
-                       data$ave_more_race,
-                       data$ave_unknown,
-                       data$ave_Islander)
+# Ethnicity pie chart
+draw_pie <- function(data, category, state) {
+  div_percentages <- c(
+    data$ave_American_Indian,
+    data$ave_Asian,
+    data$ave_African_American,
+    data$ave_Latino,
+    data$ave_White,
+    data$ave_more_race,
+    data$ave_unknown,
+    data$ave_Islander
+  )
   pie_df <- data.frame(percentages = div_percentages, categories = category)
-  View(pie_df)
   pie_plot <- plot_ly(
     pie_df,
     labels = ~categories,
     values = ~percentages,
-    type = "pie") %>%
-    layout(legend = list(orientation = "h"))
+    type = "pie"
+  ) %>%
+    layout(
+      title = paste("Ethnic diversity in", state),
+      legend = list(orientation = "h")
+      )
   return(pie_plot)
 }
 
 
-#all uni summary table
-#all states summary table
+# all uni summary table
+# all states summary table
 all_states_summary <- join_result2 %>%
   group_by(INSTNM, STABBR) %>%
   summarise(
@@ -373,30 +466,38 @@ all_states_summary <- join_result2 %>%
     percent_of_american_indian_alaskan_native =
       mean(
         Percent.of.total.enrollment.that.are.American.Indian.or.Alaska.Native,
-           na.rm = TRUE),
+        na.rm = TRUE
+      ),
     percent_of_asian = mean(Percent.of.total.enrollment.that.are.Asian,
-                            na.rm = TRUE),
+      na.rm = TRUE
+    ),
     percent_of_african_american =
       mean(Percent.of.total.enrollment.that.are.Black.or.African.American,
-           na.rm = TRUE),
+        na.rm = TRUE
+      ),
     percent_of_hispanic_or_latino =
       mean(`Percent.of.total.enrollment.that.are.Hispanic/Latino`,
-           na.rm = TRUE),
+        na.rm = TRUE
+      ),
     percent_of_white =
       mean(Percent.of.total.enrollment.that.are.White, na.rm = TRUE),
     percent_of_two_or_more_races =
       mean(Percent.of.total.enrollment.that.are.two.or.more.races,
-           na.rm = TRUE),
+        na.rm = TRUE
+      ),
     percent_of_race_unknown =
       mean(`Percent.of.total.enrollment.that.are.Race/ethnicity.unknown`,
-           na.rm = TRUE),
+        na.rm = TRUE
+      ),
     percent_of_nonresident_alien =
       mean(Percent.of.total.enrollment.that.are.Nonresident.Alien,
-           na.rm = TRUE),
+        na.rm = TRUE
+      ),
     percent_of_asian_native_pacific_islander =
       mean(
 `Percent.of.total.enrollment.that.are.Asian/Native.Hawaiian/Pacific.Islander`,
-        na.rm = TRUE),
+        na.rm = TRUE
+      ),
     percent_of_women = mean(Percent.of.total.enrollment.that.are.women)
   ) %>%
   arrange(act.avg)
