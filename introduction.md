@@ -11,10 +11,10 @@ output: html_document
 
 ***
 
-#### Project Summary
+## Project Summary
 For our final project, we decided to focus on university statistics that include acceptance GPA, SAT/ACT test scores, tuition, ethnicity, and more. We can all relate to this topic as we all went through the college application process. It is stressful, time consuming, and requires research when coming to the ultimate decision of choosing where you'll be studying for four years. Our goal for this project is to help high school students make better decisions when applying to universities, and having more confidence that they'll be accepted when applying. In addition, we want to take the information about these universities and condense it into different data visuals, so students will be able to compare multiple universities at the same time.
 
-#### Focal Project Questions
+## Focal Project Questions
 Our project focuses on answering the following questions regarding college decisions:
   - Which schools are easier to get in to?
   - Which schools cost the most to attend? which ones cost the least?
