@@ -97,7 +97,7 @@ scatter_plot <- tabPanel(
       selectInput(
         inputId = "yaxis",
         label = "Tuition",
-        choices = list("In State" = "In_state", 
+        choices = list("In State" = "In_state",
                        "Out of State" = "Out_of_State"),
         selected = "In_state"
       ),
@@ -108,14 +108,14 @@ scatter_plot <- tabPanel(
         average out-of-state tuition per state"),
       plotlyOutput(outputId = "scatter_plot"),
       p("This graph illustrates the average tuition of all
-      the universities in each state by in-state and out-of-state tuition. 
-      The scatter plot can help advise students to look 
-      into universities by state based on tuition price. 
-      In this way, students can narrow 
-      their college selection by observing which states, 
-      on average, hold universities with 
-      higher or lower tuition statements. Washington D.C., 
-      Connecticut, Massachusetts, and Rhode Island 
+      the universities in each state by in-state and out-of-state tuition.
+      The scatter plot can help advise students to look
+      into universities by state based on tuition price.
+      In this way, students can narrow
+      their college selection by observing which states,
+      on average, hold universities with
+      higher or lower tuition statements. Washington D.C.,
+      Connecticut, Massachusetts, and Rhode Island
       average the highest costs for in-state
       and out-of-state tuition around 45k-50k. Based on lowest
       average in-state tuition by state, Wyoming and
@@ -181,11 +181,8 @@ pie_chart <- mainPanel(
 )
 
 ethnicity <- tabPanel(
-  "Diversity Breakdown", 
-  sidebarLayout( 
-    div_content,
-    pie_chart
-  )
+  "Diversity Breakdown",
+  sidebarLayout(div_content, pie_chart)
 )
 
 #all uni summary table
@@ -210,4 +207,3 @@ ui <- navbarPage(
            mainPanel(uiOutput("takeaways"))),
   summary_states
 )
-
