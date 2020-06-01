@@ -1,0 +1,13 @@
+a {
+  color: red;
+}
+
+a:visited {
+  color: green;
+}
+
+.active {
+  color: yellow;
+  font-style: italic;
+  font-family: cursive;
+}

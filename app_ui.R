@@ -68,17 +68,22 @@ join_result <- right_join(df1, df3, by = c("Name" = "INSTNM"))
 join_result2 <- left_join(
   table_join,
   df2,
-  by = c("Total.price.for.in-state.students.living.on.campus.2013-14" = "tuition"))
+  by =
+    c("Total.price.for.in-state.students.living.on.campus.2013-14"
+      = "tuition"))
 
 
 # Table with tution averages per state.
 tuition_table <- table_join2 %>%
-  select(Name = "Name",
-         State = "STABBR",
-         In_State = "Total.price.for.in-state.students.living.on.campus.2013-14",
-         Out_of_State = "Total.price.for.out-of-state.students.living.on.campus.2013-14") %>%
+  select(
+    Name = "Name",
+    State = "STABBR",
+    In_State = "Total.price.for.in-state.students.living.on.campus.2013-14",
+    Out_of_State =
+      "Total.price.for.out-of-state.students.living.on.campus.2013-14") %>%
   group_by(State) %>%
-  summarize(In_state = mean(In_State, na.rm = T), Out_of_State = mean(Out_of_State, na.rm = T)) %>%
+  summarize(In_state = mean(In_State, na.rm = T),
+            Out_of_State = mean(Out_of_State, na.rm = T)) %>%
   arrange(-In_state)
 
 #Remove na values from tuition table
@@ -87,7 +92,6 @@ final_tuition_table <- na.omit(tuition_table)
 scatter_plot <- tabPanel(
   "Tuition",
   titlePanel("Average Tuition per State"),
-  
   sidebarLayout(
     sidebarPanel(
       selectInput(
@@ -96,12 +100,6 @@ scatter_plot <- tabPanel(
         choices = list("In_state", "Out_of_State"),
         selected = "In_state"
       ),
-      #selectInput(
-      # inputId = "xaxis",
-      #label = "State",
-      #choices = states,
-      #selected = "Washington"
-      #)
     ),
     mainPanel(
       h1("University Tuition"),
@@ -151,8 +149,8 @@ sidebar_content <- sidebarPanel(
 
 academic_graph <- mainPanel(
   plotlyOutput("gpa_graph"),
-  plotlyOutput("SAT_graph"),
-  plotlyOutput("ACT_graph"),
+  plotlyOutput("sat_graph"),
+  plotlyOutput("act_graph"),
   plotlyOutput("acceptance_rate_graph"),
   plotlyOutput("ranking_graph"),
   textOutput("summary")
@@ -168,6 +166,22 @@ academic <- tabPanel(
 )
 
 # Ethnicity
+div_content <- sidebarPanel(
+  selectInput(inputId = "diversityInput", 
+              label = "Choose which state you want to see the diversity statistics", 
+              choices = states, 
+              selected = list("Washington" = "WA")
+              )
+)
+
+ethnicity <- tabPanel(
+  "Diversity Breakdown", 
+  sidebarLayout( 
+    div_content,
+    p("This pie chart represents average ratio of ethnicity in universities that state you choose."),
+    plotlyOutput(outputId = "pie_chart"),
+  )
+)
 
 #all uni summary table
 summary_states <- tabPanel(
@@ -177,9 +191,10 @@ summary_states <- tabPanel(
 
 
 ui <- navbarPage(
+  inverse = TRUE,
+  theme = "app.CSS",
   #application title
   "University Statistics in the US",
-  
   #introduction page of the application
   tabPanel("Introduction",
            mainPanel(uiOutput("introduction"))),
@@ -190,3 +205,4 @@ ui <- navbarPage(
            mainPanel(uiOutput("takeaways"))),
   summary_states
 )
+
