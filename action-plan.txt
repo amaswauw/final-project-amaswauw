@@ -1,15 +1,7 @@
-Which schools cost to most to attend? Which ones cost the least?
 What schools rank highest based on student statistics(ethnicity)
 All three data sources.
 
-Three interactive pages that can be used to explore the data.
-(Tuition Data - Andrew)
 (Ethnic Diversity - Jo)
-Each page should revolve around a specific question you have of your dataset.
-Each page should have sufficient interactivity (e.g., Shiny widgets + 1 or more reactive charts) for exploring the question of interest.
-Default to Washington data!!! Use UI to get interactivity (based on user input, graph specific results)
 
 Summary takeaways, a page that hones in on at least 3 major takeaways from the project (which should be related to a specific aspect of your analysis).
-Summary for each chart! (Andrew - Tuition, Ethnicity - Jo)
-Feel free to incorporate tables, graphics, or other elements to convey these conclusions.
-All states data (Use Elizabeth's Table) (Elizabeth)
+Summary for each chart! (Ethnicity - Jo)
