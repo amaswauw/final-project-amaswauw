@@ -222,7 +222,7 @@ draw_bar <- function(data, search, graph_var) {
     data = graph_df,
     x = ~INSTNM,
     y = ~graph_df[, graph_var],
-    kind = "bar"
+    type = "bar"
   ) %>%
     layout(
       xaxis = list(tickangle = 45, titlefont = list(size = 30)),

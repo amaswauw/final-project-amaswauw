@@ -66,7 +66,7 @@ df3 <- read.csv("data/Most-Recent-Cohorts-All-Data-Elements.csv",
 
 join_result <- right_join(df1, df3, by = c("Name" = "INSTNM"))
 join_result2 <- left_join(
-  table_join,
+  join_result,
   df2,
   by =
     c("Total.price.for.in-state.students.living.on.campus.2013-14"
@@ -74,7 +74,7 @@ join_result2 <- left_join(
 
 
 # Table with tution averages per state.
-tuition_table <- table_join2 %>%
+tuition_table <- join_result2 %>%
   select(
     Name = "Name",
     State = "STABBR",
@@ -97,7 +97,8 @@ page_one <- tabPanel(
       selectInput(
         inputId = "yaxis",
         label = "Tuition",
-        choices = list("In_state", "Out_of_State"),
+        choices = list("In State" = "In_state", 
+                       "Out of State" = "Out_of_State"),
         selected = "In_state"
       ),
     ),
