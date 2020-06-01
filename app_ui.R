@@ -66,7 +66,7 @@ df3 <- read.csv("data/Most-Recent-Cohorts-All-Data-Elements.csv",
 
 join_result <- right_join(df1, df3, by = c("Name" = "INSTNM"))
 join_result2 <- left_join(
-  table_join,
+  join_result,
   df2,
   by =
     c("Total.price.for.in-state.students.living.on.campus.2013-14"
@@ -74,7 +74,7 @@ join_result2 <- left_join(
 
 
 # Table with tution averages per state.
-tuition_table <- table_join2 %>%
+tuition_table <- join_result2 %>%
   select(
     Name = "Name",
     State = "STABBR",
@@ -97,7 +97,8 @@ scatter_plot <- tabPanel(
       selectInput(
         inputId = "yaxis",
         label = "Tuition",
-        choices = list("In_state", "Out_of_State"),
+        choices = list("In State" = "In_state", 
+                       "Out of State" = "Out_of_State"),
         selected = "In_state"
       ),
     ),
@@ -167,19 +168,23 @@ academic <- tabPanel(
 
 # Ethnicity
 div_content <- sidebarPanel(
-  selectInput(inputId = "diversityInput", 
-              label = "Choose which state you want to see the diversity statistics", 
-              choices = states, 
-              selected = list("Washington" = "WA")
-              )
+  selectInput(
+    "diversityInput",
+    label = "Choose which state you want to see the diversity statistics",
+    choices = states,
+    selected = list("Washington" = "WA")
+  )
+)
+
+pie_chart <- mainPanel(
+  plotlyOutput("pie_chart")
 )
 
 ethnicity <- tabPanel(
   "Diversity Breakdown", 
   sidebarLayout( 
     div_content,
-    p("This pie chart represents average ratio of ethnicity in universities that state you choose."),
-    plotlyOutput(outputId = "pie_chart"),
+    pie_chart
   )
 )
 
@@ -192,7 +197,6 @@ summary_states <- tabPanel(
 
 ui <- navbarPage(
   inverse = TRUE,
-  theme = "app.CSS",
   #application title
   "University Statistics in the US",
   #introduction page of the application
@@ -200,6 +204,7 @@ ui <- navbarPage(
            mainPanel(uiOutput("introduction"))),
   scatter_plot,
   map,
+  ethnicity,
   academic,
   tabPanel("Major Takeaways",
            mainPanel(uiOutput("takeaways"))),

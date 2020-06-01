@@ -22,6 +22,14 @@ join_result <- inner_join(df3, df1, by = c("INSTNM" = "Name"))
 
 join_result2 <- left_join(join_result, df2,
                              by = c("INSTNM" = "displayName"))
+ethnicity_categories <- c("American Indian / Alaska Native",
+                          "Asian",
+                          "African American / Black",
+                          "Hispanic / Latino",
+                          "White",
+                          "Two or more race",
+                          "Unknown Ethnicity",
+                          "Asian / Native Hawaiian / Pacific Islander")
 
 
 
@@ -34,17 +42,26 @@ server <- shinyServer(function(input, output) {
     return(draw_map(join_result2))
   })
 
+<<<<<<< HEAD
   
   #Tuition
+=======
+  data <- final_tuition_table
+  graph_var <- "In_state"
+
+>>>>>>> 8e33494f97261373bf8840c84fcca453ab1d6e1a
 
   output$scatter_plot <- renderPlotly({
     return(draw_scatter(final_tuition_table, input$yaxis))
   })
 
+<<<<<<< HEAD
 
 
 
 
+=======
+>>>>>>> 8e33494f97261373bf8840c84fcca453ab1d6e1a
   # Academics
   output$gpa_graph <- renderPlotly({
     return(draw_bar(join_result2, input$academicInput,
@@ -83,10 +100,41 @@ server <- shinyServer(function(input, output) {
   output$summarystates <- DT::renderDataTable({
     all_states_summary
   })
+  
+  output$pie_chart <- renderPlotly({
+    data_chart <- join_result2 %>% 
+      group_by(STABBR) %>% 
+      summarize(ave_American_Indian =
+                  mean(
+                    Percent.of.total.enrollment.that.are.American.Indian.or.Alaska.Native,
+                    na.rm = TRUE),
+                ave_Asian = mean(Percent.of.total.enrollment.that.are.Asian,
+                                 na.rm = TRUE),
+                ave_African_American =
+                  mean(
+                    Percent.of.total.enrollment.that.are.Black.or.African.American,
+                    na.rm = TRUE),
+                ave_Latino =
+                  mean(
+                    `Percent.of.total.enrollment.that.are.Hispanic/Latino`,
+                    na.rm = TRUE),
+                ave_White = mean(Percent.of.total.enrollment.that.are.White, na.rm = TRUE),
+                ave_more_race =
+                  mean(
+                    Percent.of.total.enrollment.that.are.two.or.more.races,
+                    na.rm = TRUE),
+                ave_unknown =
+                  mean(
+                    `Percent.of.total.enrollment.that.are.Race/ethnicity.unknown`,
+                    na.rm = TRUE),
+                ave_Islander =
+                  mean(
+                    `Percent.of.total.enrollment.that.are.Asian/Native.Hawaiian/Pacific.Islander`,
+                    na.rm = TRUE)) %>% 
+      filter(STABBR == input$diversityInput)
+    return(draw_pie(data_chart, ethnicity_categories))
+  })
 })
-
-
-
 # Ethnicity
 ethnicity_categories <- c("American Indian / Alaska Native",
                           "Asian",
@@ -98,10 +146,15 @@ ethnicity_categories <- c("American Indian / Alaska Native",
                           "Asian / Native Hawaiian / Pacific Islander")
 
 
+<<<<<<< HEAD
 
 #Create the tuition scatter plot
 draw_scatter <- function(data, graph_var) {
 
+=======
+#Create the tuition scatter plot
+draw_scatter <- function(data, graph_var) {
+>>>>>>> 8e33494f97261373bf8840c84fcca453ab1d6e1a
   graph_df <- data %>%
     select("State", graph_var)
   if (graph_var == "In_state") {
@@ -120,7 +173,10 @@ draw_scatter <- function(data, graph_var) {
     xaxis = list(title = "State"),
     yaxis = list(title = "In-State Tuition")
   ) 
+<<<<<<< HEAD
   
+=======
+>>>>>>> 8e33494f97261373bf8840c84fcca453ab1d6e1a
   } else {
     graph <- plot_ly(
       data = graph_df,
@@ -245,7 +301,7 @@ draw_bar <- function(data, search, graph_var) {
     data = graph_df,
     x = ~INSTNM,
     y = ~graph_df[, graph_var],
-    kind = "bar"
+    type = "bar"
   ) %>%
     layout(
       xaxis = list(tickangle = 45, titlefont = list(size = 30)),
@@ -256,40 +312,6 @@ draw_bar <- function(data, search, graph_var) {
 
 
 # Ethnicity
-output$pie_chart <- renderPlotly({
-  data_chart <- join_result2 %>% 
-    group_by(STABBR) %>% 
-    summarize(ave_American_Indian =
-                mean(
-                  Percent.of.total.enrollment.that.are.American.Indian.or.Alaska.Native,
-                  na.rm = TRUE),
-              ave_Asian = mean(Percent.of.total.enrollment.that.are.Asian,
-                               na.rm = TRUE),
-              ave_African_American =
-                mean(
-                  Percent.of.total.enrollment.that.are.Black.or.African.American,
-                  na.rm = TRUE),
-              ave_Latino =
-                mean(
-                  `Percent.of.total.enrollment.that.are.Hispanic/Latino`,
-                  na.rm = TRUE),
-              ave_White = mean(Percent.of.total.enrollment.that.are.White, na.rm = TRUE),
-              ave_more_race =
-                mean(
-                  Percent.of.total.enrollment.that.are.two.or.more.races,
-                  na.rm = TRUE),
-              ave_unknown =
-                mean(
-                  `Percent.of.total.enrollment.that.are.Race/ethnicity.unknown`,
-                  na.rm = TRUE),
-              ave_Islander =
-                mean(
-                  `Percent.of.total.enrollment.that.are.Asian/Native.Hawaiian/Pacific.Islander`,
-                  na.rm = TRUE)) %>% 
-    filter(STABBR == input$diversityInput)
-  draw_pie(data_chart, ethnicity_categories)
-})
-
 draw_pie <- function(data, category){
   div_percentages <- c(data$ave_American_Indian, 
                        data$ave_Asian, 
@@ -300,10 +322,13 @@ draw_pie <- function(data, category){
                        data$ave_unknown,
                        data$ave_Islander)
   pie_df <- data.frame(percentages = div_percentages, categories = category)
-  pie_plot <- plotly(pie_df, 
-                     labels = ~categories,
-                     value = ~percentages, 
-                     type = "pie")
+  View(pie_df)
+  pie_plot <- plot_ly(
+    pie_df,
+    labels = ~categories,
+    values = ~percentages, 
+    type = "pie") %>%
+    layout(legend = list(orientation = 'h'))
   return(pie_plot)
 }
 
