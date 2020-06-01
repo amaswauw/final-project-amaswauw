@@ -9,7 +9,6 @@ All three data sources.
 
 Three interactive pages that can be used to explore the data.
 (Tuition Data - Andrew)
-(Academics - Aman)
 (Ethnic Diversity - Jo)
 Each page should revolve around a specific question you have of your dataset.
 Each page should have sufficient interactivity (e.g., Shiny widgets + 1 or more reactive charts) for exploring the question of interest.

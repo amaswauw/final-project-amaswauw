@@ -54,8 +54,6 @@ states <- list(
   "Wyoming" = "WY"
 )
 
-# Introduction
-
 
 # Tuition
 
@@ -75,7 +73,8 @@ academic_graph <- mainPanel(
   plotlyOutput("SAT_graph"),
   plotlyOutput("ACT_graph"),
   plotlyOutput("acceptance_rate_graph"),
-  plotlyOutput("ranking_graph")
+  plotlyOutput("ranking_graph"),
+  textOutput("summary")
 )
 
 academic <- tabPanel(
@@ -90,7 +89,13 @@ academic <- tabPanel(
 # Ethnicity
 
 
+
 ui <- navbarPage(
-  "Universities in the United States",
+  #application title
+  "University Statistics in the US",
+  
+  #introduction page of the application
+  tabPanel("Introduction",
+           mainPanel(uiOutput("introduction"))),
   academic
 )
