@@ -7,7 +7,7 @@ output: html_document
 
 ***
 
-![UW](https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.washington.edu%2Fcalendar%2F&psig=AOvVaw1M5zot-jhTUpCJPeE5TaVv&ust=1591058045317000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCNiR3KSv3-kCFQAAAAAdAAAAABAD)
+![UW Sign](https://s3-us-west-2.amazonaws.com/uw-s3-cdn/wp-content/uploads/sites/6/2018/10/24080351/Bronze-W-autumn.jpg)
 
 ***
 
