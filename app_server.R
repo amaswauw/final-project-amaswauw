@@ -50,9 +50,6 @@ server <- shinyServer(function(input, output) {
     return(draw_scatter(final_tuition_table, input$yaxis))
   })
 
-
-
-
   # Academics
   output$gpa_graph <- renderPlotly({
     return(draw_bar(join_result2, input$academicInput,
@@ -126,7 +123,18 @@ server <- shinyServer(function(input, output) {
     return(draw_pie(data_chart, ethnicity_categories))
   })
 })
+# Ethnicity
+ethnicity_categories <- c("American Indian / Alaska Native",
+                          "Asian",
+                          "African American / Black",
+                          "Hispanic / Latino",
+                          "White",
+                          "Two or more race",
+                          "Unknown Ethnicity",
+                          "Asian / Native Hawaiian / Pacific Islander")
 
+
+#Create the tuition scatter plot
 draw_scatter <- function(data, graph_var) {
   graph_df <- data %>%
     select("State", graph_var)
@@ -140,7 +148,12 @@ draw_scatter <- function(data, graph_var) {
     marker = list(
       size = 10
     )
-  )
+  ) %>% 
+  layout( 
+    title = "In-State Tuition vs State",
+    xaxis = list(title = "State"),
+    yaxis = list(title = "In-State Tuition")
+  ) 
   } else {
     graph <- plot_ly(
       data = graph_df,
@@ -151,6 +164,11 @@ draw_scatter <- function(data, graph_var) {
       marker = list(
         size = 10
       )
+    ) %>% 
+    layout( 
+      title = "Out-of-State Tuition vs State",
+      xaxis = list(title = "State"),
+      yaxis = list(title = "Out-of-State Tuition")
     )
   }
   return(graph)
