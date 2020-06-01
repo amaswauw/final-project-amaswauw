@@ -1,20 +1,11 @@
 library("jsonlite")
 library("openxlsx")
+library("dplyr")
 library(shiny)
-library(dplyr)
-library(tidyr)
-library(ggplot2)
 library(plotly)
 library(knitr)
 library(leaflet)
-
-df1 <- read.xlsx("data/IPEDS_data.xlsx")
-df2 <- data.frame(fromJSON(txt = "data/schoolInfo.json"))
-df3 <- read.csv("data/Most-Recent-Cohorts-All-Data-Elements.csv",
-                stringsAsFactors = FALSE,
-                na.strings = "NULL")
-join_result <- inner_join(df3, df1, by = c("INSTNM" = "Name"))
-join_result2 <- left_join(join_result, df2, by = c("INSTNM" = "displayName"))
+library(ggplot2)
 
 
 server <- shinyServer(function(input, output) {
@@ -28,9 +19,44 @@ server <- shinyServer(function(input, output) {
   })
   
   # Tuition
+  #x <- reactive ({
+  #  final_tuition_table[, input$xaxis]
+  #})  
+  
+  #y <- reactive({
+  #  final_tuition_table[, input$yaxis]
+  #})
+  #output$scatter_plot <- renderPlotly (
+  #  p <- plot_ly(
+  #    x = x(),
+  #    y = y(),
+  #    type = "scatter"
+  #  )
+  #)
+  data <- final_tuition_table
+  #search = "Washington"
+  graph_var = "In_state"
+  
+  
+  
+  output$scatter_plot <- renderPlotly ({
+    return(draw_scatter(final_tuition_table, input$yaxis))
+  })
+  
+  
   
   
   # Academics
+  output$gpa_graph <- renderPlotly({
+    return(draw_bar(join_result2, input$academicInput,
+                    "hs.gpa.avg"))
+  })
+  
+  output$SAT_graph <- renderPlotly({
+    return(draw_bar(join_result2, input$academicInput,
+                    "SAT_AVG_ALL"))
+  })
+
   output$gpa_graph <- renderPlotly({
     return(draw_bar(join_result2, input$academicInput,
                     "hs.gpa.avg"))
@@ -55,7 +81,7 @@ server <- shinyServer(function(input, output) {
     return(draw_bar(join_result2, input$academicInput,
                     "overallRank"))
   })
-  
+
   output$summary <- renderText({
     return(textSummary(join_result2, input$academicInput))
   })
@@ -64,6 +90,63 @@ server <- shinyServer(function(input, output) {
     HTML(markdown::markdownToHTML(knit('takeaways.Rmd', quiet = TRUE)))
   })
 })
+
+
+
+# Ethnicity
+
+
+draw_scatter <- function(data, graph_var) {
+  
+  #ymax <- max(data[,graph_var]) * 1.5
+  
+  # filtered_data <- data %>%
+  #  filter(data$State == search)
+  
+  graph_df <- data %>%
+    select("State", graph_var)
+  #View(graph_df)
+  #print(graph_df[,graph_var])
+  if (graph_var == "In_state") {
+  graph <- plot_ly(
+    data = graph_df,
+    x=~State,
+    y=~In_state,
+    type ="scatter",
+    mode = "markers",
+    marker = list(
+      size = 10
+    )
+  ) 
+  } else {
+    graph <- plot_ly(
+      data = graph_df,
+      x=~State,
+      y=~Out_of_State,
+      type ="scatter",
+      mode = "markers",
+      marker = list(
+        size = 10
+      )
+    ) 
+  }
+  #%>% 
+  #ayout( 
+  #yaxis = list(range = c(0, ymax), title = graph_var)
+  #)
+  return(graph)
+}
+
+draw_map <- function(data) {
+  map <- leaflet(data) %>%
+    addProviderTiles("CartoDB.Positron") %>%
+    addMarkers(
+      lat = ~LATITUDE,
+      lng = ~LONGITUDE,
+      popup = paste0("School: ", data$INSTNM)
+    )
+  return(map)
+}
 
 textSummary <- function(data, search) {
   filtered_data <- data %>%
@@ -159,22 +242,11 @@ draw_bar <- function(data, search, graph_var) {
     data = graph_df,
     x=~INSTNM,
     y=~graph_df[,graph_var],
-    type="bar"
+    kind="bar"
   ) %>%
-  layout(
-    xaxis = list(tickangle=45, titlefont=list(size=30)),
-    yaxis = list(title = graph_var)
-  )
-  return(graph)
-}
-
-draw_map <- function(data) {
-  map <- leaflet(data) %>%
-    addProviderTiles("CartoDB.Positron") %>%
-    addMarkers(
-      lat = ~LATITUDE,
-      lng = ~LONGITUDE,
-      popup = paste0("School: ", data$INSTNM)
+    layout(
+      xaxis = list(tickangle=45, titlefont=list(size=30)),
+      yaxis = list(title = graph_var)
     )
-  return(map)
+  return(graph)
 }
