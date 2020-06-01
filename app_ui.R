@@ -1,5 +1,5 @@
 library(shiny)
-library(plotly)
+library(leaflet)
 
 states <- list(
   "Alabama" = "AL",
@@ -54,25 +54,140 @@ states <- list(
   "Wisconsin" = "WI",
   "Wyoming" = "WY"
 )
-# Introduction
 
 
 # Tuition
+# Loading in the necessary dataframes.
+df1 <- read.xlsx("data/IPEDS_data.xlsx")
+df2 <- data.frame(fromJSON(txt = "data/schoolInfo.json"))
+df3 <- read.csv("data/Most-Recent-Cohorts-All-Data-Elements.csv",
+                stringsAsFactors = FALSE
+)
+
+join_result <- right_join(df1, df3, by = c("Name" = "INSTNM"))
+join_result2 <- left_join(
+  table_join,
+  df2,
+  by = c("Total.price.for.in-state.students.living.on.campus.2013-14" = "tuition"))
+
+
+# Table with tution averages per state.
+tuition_table <- table_join2 %>%
+  select(Name = "Name",
+         State = "STABBR",
+         In_State = "Total.price.for.in-state.students.living.on.campus.2013-14",
+         Out_of_State = "Total.price.for.out-of-state.students.living.on.campus.2013-14") %>%
+  group_by(State) %>%
+  summarize(In_state = mean(In_State, na.rm = T), Out_of_State = mean(Out_of_State, na.rm = T)) %>%
+  arrange(-In_state)
+
+#Remove na values from tuition table
+final_tuition_table <- na.omit(tuition_table)
+
+page_one <- tabPanel(
+  "Tuition Visualization",
+  titlePanel("Average Tuition per State"),
+  
+  sidebarLayout(
+    sidebarPanel(
+      selectInput(
+        inputId = "yaxis",
+        label = "Tuition",
+        choices = list("In_state", "Out_of_State"),
+        selected = "In_state"
+      ),
+      #selectInput(
+      # inputId = "xaxis",
+      #label = "State",
+      #choices = states,
+      #selected = "Washington"
+      #)
+    ),
+    mainPanel(
+      h1("Tuition Chart"),
+      p("This chart illustrates the average in state tuition and
+        average out of state tuition per state"),
+      plotlyOutput(outputId = "scatter_plot")
+    )
+  )
+)
+
+map_panel <- mainPanel(
+  leafletOutput("map")
+)
+
+map <- tabPanel(
+  "Map",
+  titlePanel("Map of All Universities in the United States"),
+  map_panel
+)
 
 
 # Academics
 sidebar_content <- sidebarPanel(
   selectInput(
     "academicInput",
-    label = "Variable to Graph",
-    
+    label = "Choose a State Whose Academic Performance You Want To See",
+    choices = states,
+    selected = list("Washington" = "WA")
   )
 )
 
+academic_graph <- mainPanel(
+  plotlyOutput("gpa_graph"),
+  plotlyOutput("SAT_graph"),
+  plotlyOutput("ACT_graph"),
+  plotlyOutput("acceptance_rate_graph"),
+  plotlyOutput("ranking_graph"),
+  textOutput("summary")
+)
+
 academic <- tabPanel(
-  "Academic Breakdown",
-  
+  "Academics",
+  titlePanel("Academic Breakdown"),
+  sidebarLayout(
+    sidebar_content,
+    academic_graph
+  )
 )
 
 # Ethnicity
+div_content <- sidebarPanel(
+  selectInput(inputId = "diversityInput", 
+              label = "Choose which state you want to see the diversity statistics", 
+              choices = states, 
+              selected = list("Washington" = "WA")
+              )
+)
+
+ethnicity <- tabPanel(
+  "Diversity Breakdown", 
+  sidebarLayout( 
+    div_content,
+    p("This pie chart represents average ratio of ethnicity in universities that state you choose."),
+    plotlyOutput(outputId = "pie_chart"),
+  )
+)
+
+#all uni summary table
+summary_states <- tabPanel(
+  "Summary Table of University Statistics",
+  DT::dataTableOutput("summarystates")
+)
+
+
+ui <- navbarPage(
+  #application title
+  "University Statistics in the US",
+  
+  #introduction page of the application
+  tabPanel("Introduction",
+           mainPanel(uiOutput("introduction"))),
+  page_one,
+  map,
+  academic,
+  tabPanel("Major Takeaways",
+           mainPanel(uiOutput("takeaways"))),
+  summary_states
+)
 
