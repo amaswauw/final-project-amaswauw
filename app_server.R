@@ -94,8 +94,7 @@ server <- shinyServer(function(input, output) {
       group_by(STABBR) %>%
       summarize(
         ave_American_Indian =
-          mean(
-    Percent.of.total.enrollment.that.are.American.Indian.or.Alaska.Native,
+          mean( Percent.of.total.enrollment.that.are.American.Indian.or.Alaska.Native,
     na.rm = TRUE),
     ave_Asian = mean(Percent.of.total.enrollment.that.are.Asian,
                      na.rm = TRUE),
@@ -124,6 +123,60 @@ server <- shinyServer(function(input, output) {
       filter(STABBR == input$diversityInput)
     return(draw_pie(data_chart, ethnicity_categories))
   })
+  
+  output$ethnicity_summary <- renderText({
+    summarized_pie <- join_result2 %>%
+      group_by(STABBR) %>%
+      summarize(
+        ave_American_Indian =
+          mean( Percent.of.total.enrollment.that.are.American.Indian.or.Alaska.Native,
+                na.rm = TRUE),
+        ave_Asian = mean(Percent.of.total.enrollment.that.are.Asian,
+                         na.rm = TRUE),
+        ave_African_American =
+          mean(
+            Percent.of.total.enrollment.that.are.Black.or.African.American,
+            na.rm = TRUE),
+        ave_Latino =
+          mean(
+            `Percent.of.total.enrollment.that.are.Hispanic/Latino`,
+            na.rm = TRUE),
+        ave_White = mean(Percent.of.total.enrollment.that.are.White,
+                         na.rm = TRUE),
+        ave_more_race =
+          mean(
+            Percent.of.total.enrollment.that.are.two.or.more.races,
+            na.rm = TRUE),
+        ave_unknown =
+          mean(
+            `Percent.of.total.enrollment.that.are.Race/ethnicity.unknown`,
+            na.rm = TRUE),
+        ave_Islander =
+          mean(
+            `Percent.of.total.enrollment.that.are.Asian/Native.Hawaiian/Pacific.Islander`,
+            na.rm = TRUE)) %>%
+      filter(STABBR == input$diversityInput)
+    div_percentages <- c(summarized_pie$ave_American_Indian,
+                         summarized_pie$ave_Asian,
+                         summarized_pie$ave_African_American,
+                         summarized_pie$ave_Latino,
+                         summarized_pie$ave_White,
+                         summarized_pie$ave_more_race,
+                         summarized_pie$ave_unknown,
+                         summarized_pie$ave_Islander)
+    
+    highest_percent <- max(div_percentages)
+    pie_data <- data.frame(percentages = div_percentages, categories = category)
+    highest_race <- pie_data %>% filter(percentages == highest_percent) %>% pull(category)
+    if(highest_percent > 50){
+      paste("From the result of pie chart based on state that you choose, on average, highest ratio in this state is", 
+            highest_race, "and more than half of students are belong in that race on average. ", sep = " ")
+    } else {
+      paste("From the result of pie chart based on state that you choose, on average, highest ratio in this state is", 
+            highest_race, "and less than half of students are belong in that race on average. Therefore, we might able to conclude",
+            input$diversityInput, "has well diversed universities.", sep = " ")
+    }
+  })
 })
 # Ethnicity
 ethnicity_categories <- c("American Indian / Alaska Native",
@@ -134,6 +187,8 @@ ethnicity_categories <- c("American Indian / Alaska Native",
                           "Two or more race",
                           "Unknown Ethnicity",
                           "Asian / Native Hawaiian / Pacific Islander")
+
+
 
 #Create the tuition scatter plot
 draw_scatter <- function(data, graph_var) {

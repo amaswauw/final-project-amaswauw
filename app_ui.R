@@ -182,7 +182,10 @@ pie_chart <- mainPanel(
 
 ethnicity <- tabPanel(
   "Diversity Breakdown",
-  sidebarLayout(div_content, pie_chart)
+  p("This chart represent average ratio of ethnicity in 
+    all university in that states."), 
+  sidebarLayout(div_content, pie_chart),
+  textOutput(outputId = "ethnicity_summary")
 )
 
 #all uni summary table
