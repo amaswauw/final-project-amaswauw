@@ -6,6 +6,7 @@ library(tidyr)
 library(ggplot2)
 library(plotly)
 library(knitr)
+library(leaflet)
 
 df1 <- read.xlsx("data/IPEDS_data.xlsx")
 df2 <- data.frame(fromJSON(txt = "data/schoolInfo.json"))
@@ -22,6 +23,9 @@ server <- shinyServer(function(input, output) {
     HTML(markdown::markdownToHTML(knit('introduction.Rmd', quiet = TRUE)))
   })
   
+  output$map <- renderLeaflet({
+    return(draw_map(join_result2))
+  })
   
   # Tuition
   
@@ -155,11 +159,22 @@ draw_bar <- function(data, search, graph_var) {
     data = graph_df,
     x=~INSTNM,
     y=~graph_df[,graph_var],
-    kind="bar"
+    type="bar"
   ) %>%
   layout(
     xaxis = list(tickangle=45, titlefont=list(size=30)),
     yaxis = list(title = graph_var)
   )
   return(graph)
+}
+
+draw_map <- function(data) {
+  map <- leaflet(data) %>%
+    addProviderTiles("CartoDB.Positron") %>%
+    addMarkers(
+      lat = ~LATITUDE,
+      lng = ~LONGITUDE,
+      popup = paste0("School: ", data$INSTNM)
+    )
+  return(map)
 }

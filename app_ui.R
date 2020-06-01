@@ -1,4 +1,5 @@
 library(shiny)
+library(leaflet)
 
 states <- list(
   "Alabama" = "AL",
@@ -58,6 +59,17 @@ states <- list(
 # Tuition
 
 
+map_panel <- mainPanel(
+  leafletOutput("map")
+)
+
+map <- tabPanel(
+  "Map",
+  titlePanel("Map of All Universities in the United States"),
+  map_panel
+)
+
+
 # Academics
 sidebar_content <- sidebarPanel(
   selectInput(
@@ -97,6 +109,7 @@ ui <- navbarPage(
   #introduction page of the application
   tabPanel("Introduction",
            mainPanel(uiOutput("introduction"))),
+  map,
   academic,
   tabPanel("Major Takeaways",
            mainPanel(uiOutput("takeaways")))
