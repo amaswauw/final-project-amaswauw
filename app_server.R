@@ -27,87 +27,59 @@ join_result2 <- left_join(join_result, df2,
 server <- shinyServer(function(input, output) {
   #render the introduction page
   output$introduction <- renderUI({
-    HTML(markdown::markdownToHTML(knit('introduction.Rmd', quiet = TRUE)))
+    HTML(markdown::markdownToHTML(knit("introduction.Rmd", quiet = TRUE)))
   })
-  
   output$map <- renderLeaflet({
     return(draw_map(join_result2))
   })
-  
-  # Tuition
-  #x <- reactive ({
-  #  final_tuition_table[, input$xaxis]
-  #})  
-  
-  #y <- reactive({
-  #  final_tuition_table[, input$yaxis]
-  #})
-  #output$scatter_plot <- renderPlotly (
-  #  p <- plot_ly(
-  #    x = x(),
-  #    y = y(),
-  #    type = "scatter"
-  #  )
-  #)
+
   data <- final_tuition_table
-  #search = "Washington"
-  graph_var = "In_state"
-  
-  
-  
-  output$scatter_plot <- renderPlotly ({
+  graph_var <- "In_state"
+
+
+  output$scatter_plot <- renderPlotly({
     return(draw_scatter(final_tuition_table, input$yaxis))
   })
-  
-  
-  
-  
+
+
+
+
   # Academics
   output$gpa_graph <- renderPlotly({
     return(draw_bar(join_result2, input$academicInput,
                     "hs.gpa.avg"))
   })
-  
-  output$SAT_graph <- renderPlotly({
+
+  output$sat_graph <- renderPlotly({
     return(draw_bar(join_result2, input$academicInput,
                     "SAT_AVG_ALL"))
   })
 
-  output$gpa_graph <- renderPlotly({
-    return(draw_bar(join_result2, input$academicInput,
-                    "hs.gpa.avg"))
-  })
-  
-  output$SAT_graph <- renderPlotly({
-    return(draw_bar(join_result2, input$academicInput,
-                    "SAT_AVG_ALL"))
-  })
-  
-  output$ACT_graph <- renderPlotly({
+  output$act_graph <- renderPlotly({
     return(draw_bar(join_result2, input$academicInput,
                     "ACT.Composite.75th.percentile.score"))
   })
-  
+
   output$acceptance_rate_graph <- renderPlotly({
     return(draw_bar(join_result2, input$academicInput,
                     "ADM_RATE"))
   })
-  
+
   output$ranking_graph <- renderPlotly({
     return(draw_bar(join_result2, input$academicInput,
                     "overallRank"))
   })
 
   output$summary <- renderText({
-    return(textSummary(join_result2, input$academicInput))
+    return(text_summary(join_result2, input$academicInput))
   })
-  
+
   output$takeaways <- renderUI({
-    HTML(markdown::markdownToHTML(knit('takeaways.Rmd', quiet = TRUE)))
+    HTML(markdown::markdownToHTML(knit("takeaways.Rmd", quiet = TRUE)))
   })
-  
+
 #uni summary table
-  output$summarystates = DT::renderDataTable({
+  output$summarystates <- DT::renderDataTable({
     all_states_summary
   })
 })
@@ -118,43 +90,31 @@ server <- shinyServer(function(input, output) {
 
 
 draw_scatter <- function(data, graph_var) {
-  
-  #ymax <- max(data[,graph_var]) * 1.5
-  
-  # filtered_data <- data %>%
-  #  filter(data$State == search)
-  
   graph_df <- data %>%
     select("State", graph_var)
-  #View(graph_df)
-  #print(graph_df[,graph_var])
   if (graph_var == "In_state") {
   graph <- plot_ly(
     data = graph_df,
-    x=~State,
-    y=~In_state,
-    type ="scatter",
+    x = ~State,
+    y = ~In_state,
+    type = "scatter",
     mode = "markers",
     marker = list(
       size = 10
     )
-  ) 
+  )
   } else {
     graph <- plot_ly(
       data = graph_df,
-      x=~State,
-      y=~Out_of_State,
-      type ="scatter",
+      x = ~State,
+      y = ~Out_of_State,
+      type = "scatter",
       mode = "markers",
       marker = list(
         size = 10
       )
-    ) 
+    )
   }
-  #%>% 
-  #ayout( 
-  #yaxis = list(range = c(0, ymax), title = graph_var)
-  #)
   return(graph)
 }
 
@@ -169,7 +129,7 @@ draw_map <- function(data) {
   return(map)
 }
 
-textSummary <- function(data, search) {
+text_summary <- function(data, search) {
   filtered_data <- data %>%
     filter(data$STABBR == search)
   df <- filtered_data %>%
@@ -179,7 +139,7 @@ textSummary <- function(data, search) {
   most_difficult_school_rate <- df %>%
     select("ADM_RATE") %>%
     min(na.rm = TRUE)
-  most_difficult_school_rate_school <- df %>%
+  most_diff_school_rate_school <- df %>%
     filter(ADM_RATE == most_difficult_school_rate) %>%
     select("INSTNM") %>%
     pull()
@@ -215,8 +175,8 @@ textSummary <- function(data, search) {
                     "there are a few schools that are ommitted out",
                     "of some of the charts. This is because the data",
                     "was not available for that school.", "The school",
-                    "with the lowest admission rate was ", 
-                    most_difficult_school_rate_school, " with ",
+                    "with the lowest admission rate was ",
+                    most_diff_school_rate_school, " with ",
                     most_difficult_school_rate, " rate. The school with the ",
                     "easiest admissions rate was ",
                     easiest_school_rate_school, " with ", easiest_school_rate,
@@ -229,8 +189,8 @@ textSummary <- function(data, search) {
                   "there are a few schools that are ommitted out",
                   "of some of the charts. This is because the data",
                   "was not available for that school.", "The school",
-                  "with the lowest admission rate was ", 
-                  most_difficult_school_rate_school, " with ",
+                  "with the lowest admission rate was ",
+                  most_diff_school_rate_school, " with ",
                   most_difficult_school_rate, " rate. The school with the ",
                   "easiest admissions rate was ",
                   easiest_school_rate_school, " with ", easiest_school_rate,
@@ -242,15 +202,14 @@ textSummary <- function(data, search) {
                   "there are a few schools that are ommitted out",
                   "of some of the charts. This is because the data",
                   "was not available for that school.", "The school",
-                  "with the lowest admission rate was ", 
-                  most_difficult_school_rate_school, " with ",
+                  "with the lowest admission rate was ",
+                  most_diff_school_rate_school, " with ",
                   most_difficult_school_rate, " rate. The school with the ",
                   "easiest admissions rate was ",
                   easiest_school_rate_school, " with ", easiest_school_rate,
                   " rate. Unfortunately, no ranking information is available ",
                   "for ", search, "."))
   }
-  
 }
 
 
@@ -261,12 +220,12 @@ draw_bar <- function(data, search, graph_var) {
     select("INSTNM", graph_var)
   graph <- plot_ly(
     data = graph_df,
-    x=~INSTNM,
-    y=~graph_df[,graph_var],
-    kind="bar"
+    x = ~INSTNM,
+    y = ~graph_df[, graph_var],
+    kind = "bar"
   ) %>%
     layout(
-      xaxis = list(tickangle=45, titlefont=list(size=30)),
+      xaxis = list(tickangle = 45, titlefont = list(size = 30)),
       yaxis = list(title = graph_var)
     )
   return(graph)
@@ -280,7 +239,8 @@ all_states_summary <- join_result2 %>%
     act.avg = mean(act.avg, na.rm = TRUE),
     hs.gpa.avg = mean(hs.gpa.avg, na.rm = TRUE),
     percent_of_american_indian_alaskan_native =
-      mean(Percent.of.total.enrollment.that.are.American.Indian.or.Alaska.Native,
+      mean(
+        Percent.of.total.enrollment.that.are.American.Indian.or.Alaska.Native,
            na.rm = TRUE),
     percent_of_asian = mean(Percent.of.total.enrollment.that.are.Asian,
                             na.rm = TRUE),
@@ -303,7 +263,7 @@ all_states_summary <- join_result2 %>%
            na.rm = TRUE),
     percent_of_asian_native_pacific_islander =
       mean(
-        `Percent.of.total.enrollment.that.are.Asian/Native.Hawaiian/Pacific.Islander`,
+`Percent.of.total.enrollment.that.are.Asian/Native.Hawaiian/Pacific.Islander`,
         na.rm = TRUE),
     percent_of_women = mean(Percent.of.total.enrollment.that.are.women)
   ) %>%
