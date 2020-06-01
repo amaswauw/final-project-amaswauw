@@ -152,19 +152,23 @@ academic <- tabPanel(
 
 # Ethnicity
 div_content <- sidebarPanel(
-  selectInput(inputId = "diversityInput", 
-              label = "Choose which state you want to see the diversity statistics", 
-              choices = states, 
-              selected = list("Washington" = "WA")
-              )
+  selectInput(
+    "diversityInput",
+    label = "Choose which state you want to see the diversity statistics",
+    choices = states,
+    selected = list("Washington" = "WA")
+  )
+)
+
+pie_chart <- mainPanel(
+  plotlyOutput("pie_chart")
 )
 
 ethnicity <- tabPanel(
   "Diversity Breakdown", 
   sidebarLayout( 
     div_content,
-    p("This pie chart represents average ratio of ethnicity in universities that state you choose."),
-    plotlyOutput(outputId = "pie_chart"),
+    pie_chart
   )
 )
 
@@ -177,7 +181,6 @@ summary_states <- tabPanel(
 
 ui <- navbarPage(
   inverse = TRUE,
-  theme = "app.CSS",
   #application title
   "University Statistics in the US",
   #introduction page of the application
@@ -185,6 +188,7 @@ ui <- navbarPage(
            mainPanel(uiOutput("introduction"))),
   page_one,
   map,
+  ethnicity,
   academic,
   tabPanel("Major Takeaways",
            mainPanel(uiOutput("takeaways"))),
