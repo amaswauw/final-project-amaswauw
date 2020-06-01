@@ -1,5 +1,4 @@
 library(shiny)
-library(plotly)
 
 states <- list(
   "Alabama" = "AL",
@@ -54,6 +53,7 @@ states <- list(
   "Wisconsin" = "WI",
   "Wyoming" = "WY"
 )
+
 # Introduction
 
 
@@ -64,14 +64,33 @@ states <- list(
 sidebar_content <- sidebarPanel(
   selectInput(
     "academicInput",
-    label = "Variable to Graph",
-    
+    label = "Choose a State Whose Academic Performance You Want To See",
+    choices = states,
+    selected = list("Washington" = "WA")
   )
 )
 
+academic_graph <- mainPanel(
+  plotlyOutput("gpa_graph"),
+  plotlyOutput("SAT_graph"),
+  plotlyOutput("ACT_graph"),
+  plotlyOutput("acceptance_rate_graph"),
+  plotlyOutput("ranking_graph")
+)
+
 academic <- tabPanel(
-  "Academic Breakdown",
-  
+  "Academics",
+  titlePanel("Academic Breakdown"),
+  sidebarLayout(
+    sidebar_content,
+    academic_graph
+  )
 )
 
 # Ethnicity
+
+
+ui <- navbarPage(
+  "Universities in the United States",
+  academic
+)
