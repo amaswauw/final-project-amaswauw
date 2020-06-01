@@ -151,6 +151,22 @@ academic <- tabPanel(
 )
 
 # Ethnicity
+div_content <- sidebarPanel(
+  selectInput(inputId = "diversityInput", 
+              label = "Choose which state you want to see the diversity statistics", 
+              choices = states, 
+              selected = list("Washington" = "WA")
+              )
+)
+
+ethnicity <- tabPanel(
+  "Diversity Breakdown", 
+  sidebarLayout( 
+    div_content,
+    p("This pie chart represents average ratio of ethnicity in universities that state you choose."),
+    plotlyOutput(outputId = "pie_chart"),
+  )
+)
 
 #all uni summary table
 summary_states <- tabPanel(
@@ -174,3 +190,4 @@ ui <- navbarPage(
            mainPanel(uiOutput("takeaways"))),
   summary_states
 )
+
