@@ -84,8 +84,8 @@ tuition_table <- table_join2 %>%
 #Remove na values from tuition table
 final_tuition_table <- na.omit(tuition_table)
 
-page_one <- tabPanel(
-  "Tuition Visualization",
+scatter_plot <- tabPanel(
+  "Tuition",
   titlePanel("Average Tuition per State"),
   
   sidebarLayout(
@@ -104,10 +104,26 @@ page_one <- tabPanel(
       #)
     ),
     mainPanel(
-      h1("Tuition Chart"),
-      p("This chart illustrates the average in state tuition and
-        average out of state tuition per state"),
-      plotlyOutput(outputId = "scatter_plot")
+      h1("University Tuition"),
+      p("This chart illustrates the average in-state tuition and
+        average out-of-state tuition per state"),
+      plotlyOutput(outputId = "scatter_plot"),
+      p("This graph illustrates the average tuition of all
+      the universities in each state by in-state and out-of-state tuition. 
+      The scatter plot can help advise students to look 
+      into universities by state based on tuition price. 
+      In this way, students can narrow 
+      their college selection by observing which states, 
+      on average, hold universities with 
+      higher or lower tuition statements. Washington D.C., 
+      Connecticut, Massachusetts, and Rhode Island 
+      average the highest costs for in-state
+      and out-of-state tuition around 45k-50k. Based on lowest
+      average in-state tuition by state, Wyoming and
+      North Dakota are the cheapest nearing 20k. Based on lowest
+      average out-of-state tution, North Dakota,
+      Missouri, and South Dakota have the lowest
+      costs pricing around 25k.")
     )
   )
 )
@@ -167,7 +183,7 @@ ui <- navbarPage(
   #introduction page of the application
   tabPanel("Introduction",
            mainPanel(uiOutput("introduction"))),
-  page_one,
+  scatter_plot,
   map,
   academic,
   tabPanel("Major Takeaways",
