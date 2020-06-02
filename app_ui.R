@@ -140,9 +140,20 @@ scatter_plot <- tabPanel(
 map_panel <- mainPanel(
   leafletOutput("map")
 )
+
+map_sidebar_content <- sidebarPanel(
+  selectInput(
+    "state",
+    label = "Choose a State Whose Map of Universities you want to see",
+    choices = states,
+    selected = list("Washington" = "WA")
+  )
+)
+
 map <- tabPanel(
   "Map",
   titlePanel("Map of All Universities in the United States"),
+  map_sidebar_content,
   map_panel
 )
 

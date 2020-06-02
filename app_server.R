@@ -45,7 +45,7 @@ server <- shinyServer(function(input, output) {
 
   # Render the map page
   output$map <- renderLeaflet({
-    return(draw_map(join_result2))
+    return(draw_map(join_result2, input$state))
   })
 
   # Render the tuition scatter plot
@@ -277,13 +277,222 @@ draw_scatter <- function(data, graph_var) {
 }
 
 # Create the map
-draw_map <- function(data) {
-  map <- leaflet(data) %>%
+# 
+draw_map <- function(data, state) {
+  filtered_data <- data %>%
+    filter(STABBR == !!as.character(state))
+  if (state == "AL") {
+    zoom_lat <- 32.318230
+    zoom_lng <- -86.902298
+    zoom_lvl <- 6
+  } else if (state == "AK") {
+    zoom_lat <- 66.160507
+    zoom_lng <- -153.369141
+    zoom_lvl <- 3
+  } else if (state == "AZ") {
+    zoom_lat <- 34.048927
+    zoom_lng <- -111.093735
+    zoom_lvl <- 6
+  } else if (state == "AR") {
+    zoom_lat <- 34.799999
+    zoom_lng <- -92.199997
+    zoom_lvl <- 6
+  } else if (state == "CA") {
+    zoom_lat <- 36.778259
+    zoom_lng <- -119.417931
+    zoom_lvl <- 5
+  } else if (state == "CO") {
+    zoom_lat <- 39.113014
+    zoom_lng <- -105.358887
+    zoom_lvl <- 6
+  } else if (state == "CT") {
+    zoom_lat <- 41.599998
+    zoom_lng <- -72.699997
+    zoom_lvl <- 8
+  } else if (state == "DE") {
+    zoom_lat <- 39.000000
+    zoom_lng <- -75.500000
+    zoom_lvl <- 8
+  } else if (state == "DC") {
+    zoom_lat <- 38.915204
+    zoom_lng <- -77.09291
+    zoom_lvl <- 11
+  } else if (state == "FL") {
+    zoom_lat <- 27.994402
+    zoom_lng <- -81.760254
+    zoom_lvl <- 5
+  } else if (state == "GA") {
+    zoom_lat <- 33.247875
+    zoom_lng <- -83.441162
+    zoom_lvl <- 6
+  } else if (state == "HI") {
+    zoom_lat <- 19.741755
+    zoom_lng <- -155.844437
+    zoom_lvl <- 7
+  } else if (state == "ID") {
+    zoom_lat <- 44.068203
+    zoom_lng <- -114.742043
+    zoom_lvl <- 5
+  } else if (state == "IL") {
+    zoom_lat <- 40.000000
+    zoom_lng <- -89.000000
+    zoom_lvl <- 6
+  } else if (state == "IN") {
+    zoom_lat <- 40.273502
+    zoom_lng <- -86.126976
+    zoom_lvl <- 6
+  } else if (state == "IA") {
+    zoom_lat <- 42.032974
+    zoom_lng <- -93.581543
+    zoom_lvl <- 6
+  } else if (state == "KS") {
+    zoom_lat <- 38.500000
+    zoom_lng <- -98.000000
+    zoom_lvl <- 6
+  } else if (state == "KY") {
+    zoom_lat <- 37.839333
+    zoom_lng <- -84.270020
+    zoom_lvl <- 6
+  } else if (state == "LA") {
+    zoom_lat <- 30.391830
+    zoom_lng <- -92.329102
+    zoom_lvl <- 6
+  } else if (state == "ME") {
+    zoom_lat <- 45.367584
+    zoom_lng <- -68.972168
+    zoom_lvl <- 6
+  } else if (state == "MD") {
+    zoom_lat <- 39.045753
+    zoom_lng <- -76.641273
+    zoom_lvl <- 7
+  } else if (state == "MA") {
+    zoom_lat <- 42.407211
+    zoom_lng <- -71.382439
+    zoom_lvl <- 7
+  } else if (state == "MI") {
+    zoom_lat <- 44.182205
+    zoom_lng <- -84.506836
+    zoom_lvl <- 5
+  } else if (state == "MN") {
+    zoom_lat <- 46.392410
+    zoom_lng <- -94.636230
+    zoom_lvl <- 6
+  } else if (state == "MO") {
+    zoom_lat <- 38.573936
+    zoom_lng <- -92.603760
+    zoom_lvl <- 6
+  } else if (state == "MS") {
+    zoom_lat <- 33.000000
+    zoom_lng <- -90.000000
+    zoom_lvl <- 6
+  } else if (state == "MT") {
+    zoom_lat <- 46.965260
+    zoom_lng <- -109.533691
+    zoom_lvl <- 5
+  } else if (state == "NE") {
+    zoom_lat <- 41.500000
+    zoom_lng <- -100.000000
+    zoom_lvl <- 6
+  } else if (state == "NV") {
+    zoom_lat <- 39.876019
+    zoom_lng <- -117.224121
+    zoom_lvl <- 5
+  } else if (state == "NH") {
+    zoom_lat <- 44.000000
+    zoom_lng <- -71.500000
+    zoom_lvl <- 7
+  } else if (state == "NJ") {
+    zoom_lat <- 39.833851
+    zoom_lng <- -74.871826
+    zoom_lvl <- 7
+  } else if (state == "NM") {
+    zoom_lat <- 34.307144
+    zoom_lng <- -106.018066
+    zoom_lvl <- 6
+  } else if (state == "NY") {
+    zoom_lat <- 43.000000
+    zoom_lng <- -75.000000
+    zoom_lvl <- 6
+  } else if (state == "NC") {
+    zoom_lat <- 35.782169
+    zoom_lng <- -80.793457
+    zoom_lvl <- 6
+  } else if (state == "ND") {
+    zoom_lat <- 47.650589
+    zoom_lng <- -100.437012
+    zoom_lvl <- 6
+  } else if (state == "OH") {
+    zoom_lat <- 40.367474
+    zoom_lng <- -82.996216
+    zoom_lvl <- 7
+  } else if (state == "OK") {
+    zoom_lat <- 36.084621
+    zoom_lng <- -96.921387
+    zoom_lvl <- 6
+  } else if (state == "OR") {
+    zoom_lat <- 44.000000
+    zoom_lng <- -120.500000
+    zoom_lvl <- 6
+  } else if (state == "PA") {
+    zoom_lat <- 41.203323
+    zoom_lng <- -77.194527
+    zoom_lvl <- 6
+  } else if (state == "RI") {
+    zoom_lat <- 41.700001
+    zoom_lng <- -71.500000
+    zoom_lvl <- 9
+  } else if (state == "SC") {
+    zoom_lat <- 33.836082
+    zoom_lng <- -81.163727
+    zoom_lvl <- 7
+  } else if (state == "SD") {
+    zoom_lat <- 44.500000
+    zoom_lng <- -100.000000
+    zoom_lvl <- 6
+  } else if (state == "TN") {
+    zoom_lat <- 35.860119
+    zoom_lng <- -86.660156
+    zoom_lvl <- 6
+  } else if (state == "TX") {
+    zoom_lat <- 31.000000
+    zoom_lng <- -100.000000
+    zoom_lvl <- 5
+  } else if (state == "UT") {
+    zoom_lat <- 39.419220
+    zoom_lng <- -111.950684
+    zoom_lvl <- 6
+  } else if (state == "VA") {
+    zoom_lat <- 37.926868
+    zoom_lng <- -78.024902
+    zoom_lvl <- 6
+  } else if (state == "VT") {
+    zoom_lat <- 44.000000
+    zoom_lng <- -72.699997
+    zoom_lvl <- 7
+  } else if (state == "WA") {
+    zoom_lat <- 47.751076
+    zoom_lng <- -120.740135
+    zoom_lvl <- 6
+  } else if (state == "WV") {
+    zoom_lat <- 39.000000
+    zoom_lng <- -80.500000
+    zoom_lvl <- 6
+  } else if (state == "WI") {
+    zoom_lat <- 44.500000
+    zoom_lng <- -89.500000
+    zoom_lvl <- 6
+  } else if (state == "WY") {
+    zoom_lat <- 43.075970
+    zoom_lng <- -107.290283
+    zoom_lvl <- 6
+  }
+  map <- leaflet(filtered_data) %>%
     addProviderTiles("CartoDB.Positron") %>%
+    setView(lng=zoom_lng, lat=zoom_lat, zoom=zoom_lvl) %>%
     addMarkers(
       lat = ~LATITUDE,
       lng = ~LONGITUDE,
-      popup = paste0("School: ", data$INSTNM)
+      popup = paste0("School: ", filtered_data$INSTNM)
     )
   return(map)
 }
