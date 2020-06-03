@@ -144,7 +144,7 @@ map_panel <- mainPanel(
 map_sidebar_content <- sidebarPanel(
   selectInput(
     "state",
-    label = "Choose a State Whose Map of Universities you want to see",
+    label = "Universities in:",
     choices = states,
     selected = list("Washington" = "WA")
   )
