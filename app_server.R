@@ -710,3 +710,38 @@ all_states_summary <- join_result2 %>%
     percent_of_women = mean(Percent.of.total.enrollment.that.are.women)
   ) %>%
   arrange(act.avg)
+
+summary_table <- all_states_summary %>%
+  mutate(
+    "ACT Average" = act.avg,
+    "High School Average GPA" = hs.gpa.avg,
+    "Native American (% Diversity)" =
+      percent_of_american_indian_alaskan_native,
+    "Asian (% Diversity)" = percent_of_asian,
+    "African American (% Diversity)" = percent_of_african_american,
+    "Hispanic or Latino (% Diversity)" = percent_of_hispanic_or_latino,
+    "White (% Diversity)" = percent_of_white,
+    "Two Or More Races (% Diversity)" = percent_of_two_or_more_races,
+    "Race Unknown (% Diversity)" = percent_of_race_unknown,
+    "Nonresident Alien (% Diversity)" = percent_of_nonresident_alien,
+    "Asian Native Pacific Islander (% Diversity)" =
+      percent_of_asian_native_pacific_islander,
+    "Women (% Diversity)" = percent_of_women
+  )
+
+all_states_summary <- summary_table %>%
+  select(
+    INSTNM, STABBR,
+    `ACT Average`,
+    `High School Average GPA`,
+    `Native American (% Diversity)`,
+    `Asian (% Diversity)`,
+    `African American (% Diversity)`,
+    `Hispanic or Latino (% Diversity)`,
+    `White (% Diversity)`,
+    `Two Or More Races (% Diversity)`,
+    `Race Unknown (% Diversity)`,
+    `Nonresident Alien (% Diversity)`,
+    `Asian Native Pacific Islander (% Diversity)`,
+    `Women (% Diversity)`
+  )
