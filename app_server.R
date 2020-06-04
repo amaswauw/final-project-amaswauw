@@ -277,7 +277,6 @@ draw_scatter <- function(data, graph_var) {
 }
 
 # Create the map
-# 
 draw_map <- function(data, state) {
   filtered_data <- data %>%
     filter(STABBR == !!as.character(state))
@@ -488,7 +487,7 @@ draw_map <- function(data, state) {
   }
   map <- leaflet(filtered_data) %>%
     addProviderTiles("CartoDB.Positron") %>%
-    setView(lng=zoom_lng, lat=zoom_lat, zoom=zoom_lvl) %>%
+    setView(lng = zoom_lng, lat = zoom_lat, zoom = zoom_lvl) %>%
     addMarkers(
       lat = ~LATITUDE,
       lng = ~LONGITUDE,
